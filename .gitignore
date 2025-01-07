@@ -1,0 +1,14 @@
+# Ignore virtual env
+pos_env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Local env config
+pyvenv.cfg
+
+# Django migrations (atm)
+db.sqlite3
+*.sqlite3
