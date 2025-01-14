@@ -1,0 +1,17 @@
+[
+    {
+        "model": "pos_app.Product",
+        "fields": [
+            {
+                "pk": 1,
+                "EAN": "50409709",
+                "name": "Mrs Elswood Sandwich Slices Cucumbers 540G",
+                "price": 2.65,
+                "discount": "True",
+                "discounted_price": 2.00,
+                "image": "elswood_pickles_540g.jpg",
+                "available_qty": 147
+            }
+        ]
+    }
+]

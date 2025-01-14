@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block title %} Customer Checkout {% endblock %}
+{% block content %}
+<!-- CSS for this page -->
+
+<!-- Rest of content -->
+<div class="product-container-header">
+    <h5 id="item-count">{{ num_items }} Items</h5>
+    <h5 id="checkout-datetime">{{ current_datetime }} Date</h5>
+</div>
+<div class="product-container-main">
+    <p>Placeholder image + item</p>
+</div>
+<div class="product-container-footer">
+    <h5 id="savings-total">Savings: {{ savings_total }}</h5>
+    <h5 id="basket-total"> Basket Total: {{ basket_total }}</h5>
+</div>
+
+<div class="options-container-header">
+    <input type="text" id="ean-input" placeholder="Enter EAN">
+    <input type="button" id="enter-menu-button" onclick="alert('Colleague Menu is unavailable right now.')" value="Menu">
+</div>
+<div class="options-container-main">
+    <h5 id="other-items-title"> Other Items</h5>
+    <div class="other-item-box">
+        <img src="fruit-stock-image.jpg" alt="Fruit Image">
+        <p>Fruit</p>
+    </div>
+    <div class="other-item-box">
+        <img src="veg-stock-image.jpg" alt="Veg Image">
+        <p>Vegetables &amp; Salad</p>
+    </div>
+    <div class="other-item-box">
+        <img src="bakery-stock-image.jpg" alt="Bakery Image">
+        <p>Bakery</p>
+    </div>
+    <div class="other-item-box">
+        <img src="misc-stock-image.jpg" alt="Misc Image">
+        <p>Miscellaneous</p>
+    </div>
+</div>
+<div class="options-container-footer">
+    <input type="button" id="add-bag-button" value="Add a bag">
+    <input type="button" id="enter-pay-screen-button" value="Pay">
+</div>
+
+<!-- <script type="module" src="js/customer_checkout.js"></script> -->
+{% endblock %}
