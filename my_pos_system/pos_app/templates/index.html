@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block title %} Home Page {% endblock %}
+{% load static %}
+{% block content %}
+<h1 id="welcome-msg">Welcome to the CharStore POS System!</h1>
+<div class="landing-image-container">
+    <img src="checkout-sample-image.jpg" alt="Checkout Sample Image">
+    <img src="inventory-sample-image.jpg" alt="Inventory Sample Image">
+    <img src="backoffice-sample-image.jpg" alt="CBO Sample Image">
+</div>
+
+<div class="landing-container">
+    <p>This POS system allows you to purchase a variety of supermarket products such as fruit, vegetables, dry grocery items, and non-food items using the checkout interface. Enter the European Article Number (EAN) of your desired product to add it to your basket, and update the desired quantity as you wish. Once you're finished, click the "Pay" button to complete your transaction.</p>
+    <p>The inventory management section details the current quantity of all products within the system and how many have been sold today.</p>
+    <p>Finally, the Checkout Backoffice allows a privileged user to search through transactions and view reports of the day's sales.</p>
+    <br>
+    <p>Click the button below to enter the checkout interface and start your purchase!</p>
+    <button id="enter-checkout-button"><a href="#">Start Now</a></button>
+</div>
+<footer class="main-footer">
+    <div class="footer-icons">
+        <a href="https://gitlab.com/B-McKen" target="_blank">
+            <img src="{% static 'images/gitlab-logo-text.png' %}" alt="GitLab" class="icon">
+        </a>
+        <a href="https://www.linkedin.com/in/billy-mcken/" target="_blank">
+            <img src="{% static 'images/LI-Logo.png' %}" alt="LinkedIn" class="icon">
+        </a>
+    </div>
+    <p class="footer-text">
+        Built using Django. <br>
+        Want to collaborate? <a href="mailto:billymcken19@outlook.com">Shoot me an email!</a>
+    </p>
+</footer>
+{% endblock %}

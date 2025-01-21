@@ -5,7 +5,7 @@ class Product(models.Model):
     """
     Class to store all required information pertaining to a product.
     """
-    EAN = models.CharField(max_length=13)
+    EAN = models.CharField(max_length=13, unique=True)
     name = models.CharField(max_length=100)
     price = models.FloatField()
     discount = models.BooleanField(default=False)

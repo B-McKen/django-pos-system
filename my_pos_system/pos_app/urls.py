@@ -5,6 +5,11 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path("checkout_main/", views.checkout_main, name="Customer Checkout"),
+    path("checkout-main/", views.checkout_main, name="Customer Checkout"),
+    path("supervisor-login/", views.login_page, name="Login"),
+    path("supervisor-registration/", views.registration_page, name="Supervisor Registration"),
+    path("inventory/", views.inventory_mgmt, name="Inventory Management"),
+    path("backoffice/", views.CBO_main, name="Backoffice"),
+    path("backoffice/sales-by-item/", views.item_sales_report, name="Item Sales"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

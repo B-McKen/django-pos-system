@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %} Checkout Backoffice {% endblock %}
+{% block content %}
+<div class="CBO-container-header">
+    <h5>View reports based on transactions and sales</h5>
+    <input type="button" id="trans-hist-button" value="Transaction Journal">
+    <input type="button" id="sales-by-item-button" value="Sales by Product">
+    <input type="button" id="total-sales-report" value="Total Sales Report">
+</div>
+
+<div class="CBO-container-main">
+    <div id="trans-hist-area" style="display: none;">
+        <!-- Transaction Journal here -->
+    </div>
+    
+    <div id="sales-by-item-area" style="display: none;">
+        <!-- Sales by item here -->
+    </div>
+
+    <div id="total-sales-report-area" style="display: none;">
+        <!-- Total sales report here -->
+    </div>
+{% endblock %}

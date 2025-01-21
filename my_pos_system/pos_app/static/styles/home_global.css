@@ -1,0 +1,103 @@
+/* General and Homepage (Index) */
+* {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-main {
+    margin: 0;
+    background: #008080;
+}
+
+.nav-div {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-right: 15px; padding-left: 15px;
+}
+
+.logo a{
+    font-size: 35px; font-weight: 600; color: #ffffff;
+}
+
+li {
+    list-style: none; display: inline-block;
+}
+
+li a {
+    color: #fff; font-size: 20px; font-weight: bold; margin-right: 40px;
+}
+
+#enter-login-button {
+    background-color: #434141; border-radius: 10px; padding: 10px;
+}
+
+#enter-login-button a {
+    color: #fff; font-weight: bold; font-size: 20px;
+}
+
+body {
+    background-color: #dacfbd;
+}
+
+#welcome-msg {
+    text-align: center; font-weight: bold;
+}
+
+.landing-image-container {
+    display: flex; justify-content: space-between; align-items: center; margin: 80px;
+}
+
+.landing-container {
+    font-size: 25px; margin: 50px; text-align: center;
+}
+
+#enter-checkout-button {
+    background-color: #434141; border-radius: 10px; padding: 15px; width: 120px;
+}
+
+#enter-checkout-button a {
+    color: #fff; font-weight: bold; font-size: 18px;
+}
+
+.main-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 30px 0 0;
+    box-sizing: border-box;
+    background-color: #008080; color: #fff; text-align: center;
+    padding: 25px 0 15px; font-size: 18px;
+}
+
+.footer-icons {
+    margin-bottom: 10px;
+}
+
+.footer-icons .icon {
+    width: 120px;
+    height: 30px;
+    margin: 0 10px;
+    transition: transform 0.3s;
+}
+
+.footer-icons .icon:hover {
+    transform: scale(1.2);
+}
+
+.footer-text {
+    margin-top: 10px;
+}
+
+.footer-text a {
+    color: #fff; text-decoration: underline;
+}
+
+.footer-text a:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %} Supervisor Registration {% endblock %}
+{% block content %}
+<h5>Supervisor Registration</h5>
+<h6>Register to gain supervisor access to the Inventory Management and Checkout Backoffice systems.</h6>
+
+<form>
+    <label for="username">Username:</label><br>
+    <input type="text" id="username"><br>
+    <label for="email_address" id="email_address">Email Address:</label><br>
+    <input type="email" id="email_address"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password"><br>
+    <label for="re_enter_password">Re-enter Password:</label><br>
+    <input type="password" id="re_enter_password">
+</form>
+{% endblock %}

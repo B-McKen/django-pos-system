@@ -1,6 +1,10 @@
 {% extends "base.html" %} {% block title %} Customer Checkout {% endblock %}
-{% block content %}
+{% load static %}
 <!-- CSS for this page -->
+{% block additional_css %}
+    <link rel="stylsheet" href="{% static 'styles/checkout.css' %}?v=1"/>
+{% endblock %}
+{% block content %}
 
 <!-- Rest of content -->
 <div class="product-container-header">

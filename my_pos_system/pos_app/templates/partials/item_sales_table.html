@@ -1,0 +1,26 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>EAN</th>
+            <th>Sales Today</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <td>
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 50px; height: auto;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.EAN }}</td>
+                <td>{{ product.sold_today }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
