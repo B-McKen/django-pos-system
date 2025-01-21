@@ -1,4 +1,4 @@
-# Billy's POS System
+# CharStore POS System
 A Django-based Point of Sale (POS) system using Python. Manages sales on the checkout interface, product inventory, and transaction history/reporting.
 
 ## Features (WIP)
