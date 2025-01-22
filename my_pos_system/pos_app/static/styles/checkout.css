@@ -1,0 +1,17 @@
+.checkout-container {
+    display: flex;
+    flex-direction: row; /* Split product and options area in half */
+    border: 10px solid #434141;
+    height: 100vh;
+}
+
+.product-container, .options-container {
+    flex: 1; /* Take equal space to each other */
+    display: flex; /* It's own flexbox too */
+    flex-direction: column;
+    padding: 5px;
+}
+
+.options-container {
+    background-color: #fff;
+}
