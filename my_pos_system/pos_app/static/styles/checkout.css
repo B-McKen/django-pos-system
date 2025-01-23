@@ -1,7 +1,16 @@
+/* Navbar active page highlight */
+.home-link {
+    color: #fff;
+}
+
+.cc-link {
+    color: #cc6d15;
+}
+
 .checkout-container {
     display: flex;
     flex-direction: row; /* Split product and options area in half */
-    border: 10px solid #434141;
+    border: 20px solid #434141;
     height: 100vh;
 }
 
@@ -9,9 +18,81 @@
     flex: 1; /* Take equal space to each other */
     display: flex; /* It's own flexbox too */
     flex-direction: column;
+    justify-content: space-between;
     padding: 5px;
+    border: 1px solid #434141;
 }
 
 .options-container {
     background-color: #fff;
+}
+
+.product-container > .product-container-header,
+.product-container > .product-container-main,
+.product-container > .product-container-footer,
+.options-container > .options-container-header,
+.options-container > .options-container-main,
+.options-container > .options-container-footer {
+    margin: 5px 0;
+}
+
+.product-container-header, .product-container-footer,
+.options-container-header, .options-container-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 50px;
+}
+
+.product-container-footer {
+    background: linear-gradient(to right, #ffee00 50%, #008080 50%);
+}
+
+/* For specific elements */
+#savings-total, #basket-total {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+#basket-total {
+    padding-left: 10px;
+}
+
+#add-bag-button, #ean-input, #enter-menu-button {
+    display: flex; /* Align icon and text */
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Space between icon and text */
+    border: 3px solid #008080;
+    color: #008080;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    width: 140px;
+    font-weight: bold;
+}
+
+#add-bag-button, #enter-menu-button {
+    cursor: pointer;
+}
+
+#add-bag-button:hover, #enter-menu-button:hover {
+    background-color: #008080;
+    color: #fff;
+}
+
+#add-bag-button img {
+    width: 20px;
+    height: 20px;
+}
+
+#pay-button {
+    border: 3px solid #434141;
+    color: #434141;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    width: 140px;
+    font-weight: bold;
 }

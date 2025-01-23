@@ -10,22 +10,22 @@
 <div class="checkout-container">
     <div class="product-container">
         <div class="product-container-header">
-            <h5 id="item-count">{{ num_items }} Items</h5>
-            <h5 id="checkout-datetime">{{ current_datetime }} Date</h5>
+            <h4 id="item-count">{{ num_items }} Items</h4>
+            <h4 id="checkout-datetime">{{ current_datetime }} Date</h4>
         </div>
         <div class="product-container-main">
             <p>Placeholder image + item</p>
         </div>
         <div class="product-container-footer">
-            <h5 id="savings-total">Savings: {{ savings_total }}</h5>
-            <h5 id="basket-total"> Basket Total: {{ basket_total }}</h5>
+            <h4 id="savings-total">Savings: {{ savings_total }}</h4>
+            <h4 id="basket-total"> Basket Total: {{ basket_total }}</h4>
         </div>
     </div>
 
     <div class="options-container">
         <div class="options-container-header">
             <input type="text" id="ean-input" placeholder="Enter EAN">
-            <input type="button" id="enter-menu-button" onclick="alert('Colleague Menu is unavailable right now.')" value="Menu">
+            <button id="enter-menu-button" onclick="alert('Colleague Menu is unavailable right now.')"> Menu </button>
         </div>
         <div class="options-container-main">
             <h5 id="other-items-title"> Other Items</h5>
@@ -47,8 +47,8 @@
             </div>
         </div>
         <div class="options-container-footer">
-            <input type="button" id="add-bag-button" value="Add a bag">
-            <input type="button" id="enter-pay-screen-button" value="Pay">
+            <button id="add-bag-button"><img src="{% static 'images/bag-icon.png' %}" alt="Bag Icon"> Add a bag </button>
+            <button id="pay-button"> Pay</button>
         </div>
     </div>
 </div>
