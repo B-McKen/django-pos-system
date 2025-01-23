@@ -10,15 +10,15 @@
 <div class="checkout-container">
     <div class="product-container">
         <div class="product-container-header">
-            <h4 id="item-count">{{ num_items }} Items</h4>
-            <h4 id="checkout-datetime">{{ current_datetime }} Date</h4>
+            <p id="item-count">{{ num_items }} Items</p>
+            <p id="checkout-datetime">{{ current_datetime }} Date</p>
         </div>
         <div class="product-container-main">
             <p>Placeholder image + item</p>
         </div>
         <div class="product-container-footer">
-            <h4 id="savings-total">Savings: {{ savings_total }}</h4>
-            <h4 id="basket-total"> Basket Total: {{ basket_total }}</h4>
+            <p id="savings-total"> Savings: {{ savings_total }}</p>
+            <p id="basket-total"> Basket Total: {{ basket_total }}</p>
         </div>
     </div>
 
@@ -28,27 +28,35 @@
             <button id="enter-menu-button" onclick="alert('Colleague Menu is unavailable right now.')"> Menu </button>
         </div>
         <div class="options-container-main">
-            <h5 id="other-items-title"> Other Items</h5>
+            <p id="other-items-title"> Other Items</p>
             <div class="other-item-box">
-                <img src="fruit-stock-image.jpg" alt="Fruit Image">
-                <p>Fruit</p>
+                <button class="other-item-button" id="fruit-button">
+                    <img src="{% static 'images/fruit-stock-image.jpg' %}" alt="Fruit Image">
+                    <p>Fruit</p>
+                </button>
             </div>
             <div class="other-item-box">
-                <img src="veg-stock-image.jpg" alt="Veg Image">
-                <p>Vegetables &amp; Salad</p>
+                <button class="other-item-button" id="veg-button">
+                    <img src="{% static 'images/veg-stock-image.jpg' %}" alt="Veg Image">
+                    <p>Vegetables &amp; Salad</p>
+                </button>
             </div>
             <div class="other-item-box">
-                <img src="bakery-stock-image.jpg" alt="Bakery Image">
-                <p>Bakery</p>
+                <button class="other-item-button" id="bakery-button">
+                    <img src="{% static 'images/bakery-stock-image.jpg' %}" alt="Bakery Image">
+                    <p>Bakery</p>
+                </button>
             </div>
             <div class="other-item-box">
-                <img src="misc-stock-image.jpg" alt="Misc Image">
-                <p>Miscellaneous</p>
+                <button class="other-item-button" id="misc-button">
+                    <img src="{% static 'images/misc-stock-image.jpg' %}" alt="Misc Image">
+                    <p>Miscellaneous</p>
+                </button>
             </div>
         </div>
         <div class="options-container-footer">
             <button id="add-bag-button"><img src="{% static 'images/bag-icon.png' %}" alt="Bag Icon"> Add a bag </button>
-            <button id="pay-button"> Pay</button>
+            <button id="pay-button">Pay</button>
         </div>
     </div>
 </div>
