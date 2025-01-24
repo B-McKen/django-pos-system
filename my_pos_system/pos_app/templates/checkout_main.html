@@ -14,7 +14,19 @@
             <p id="checkout-datetime">{{ current_datetime }} Date</p>
         </div>
         <div class="product-container-main">
-            <p>Placeholder image + item</p>
+            <!-- Dynamically added/'scanned' products -->
+            <div class="product-item-template" style="display: none;">
+                <button id="edit-product-button">
+                    <img src="" alt="Product Name">
+                    <div class="product-content">
+                        <p class="product-name"></p>
+                        <div class="product-info">
+                            <p class="product-quantity">Quantity: </p>
+                            <p class="product-price">£</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
         </div>
         <div class="product-container-footer">
             <p id="savings-total"> Savings: {{ savings_total }}</p>
@@ -24,7 +36,7 @@
 
     <div class="options-container">
         <div class="options-container-header">
-            <input type="text" id="ean-input" placeholder="Enter EAN">
+            <input type="text" id="ean-input" placeholder="Search for a product">
             <button id="enter-menu-button" onclick="alert('Colleague Menu is unavailable right now.')"> Menu </button>
         </div>
         <div class="options-container-main">
