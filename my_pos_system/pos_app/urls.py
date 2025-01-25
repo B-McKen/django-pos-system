@@ -11,5 +11,7 @@ urlpatterns = [
     path("inventory/", views.inventory_mgmt, name="Inventory Management"),
     path("backoffice/", views.CBO_main, name="Backoffice"),
     path("backoffice/sales-by-item/", views.item_sales_report, name="Item Sales"),
+    # Below are for views / JS interaction
+    path("api/product/", views.scanned_product, name="Scanned Product"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

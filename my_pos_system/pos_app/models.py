@@ -7,9 +7,9 @@ class Product(models.Model):
     """
     EAN = models.CharField(max_length=13, unique=True)
     name = models.CharField(max_length=100)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
     discount = models.BooleanField(default=False)
-    discounted_price = models.FloatField()
+    discounted_price = models.DecimalField(max_digits=5, decimal_places=2)
     image = models.ImageField(upload_to="media")
     available_qty = models.IntegerField()
 

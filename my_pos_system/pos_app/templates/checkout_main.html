@@ -11,9 +11,9 @@
     <div class="product-container">
         <div class="product-container-header">
             <p id="item-count">{{ num_items }} Items</p>
-            <p id="checkout-datetime">{{ current_datetime }} Date</p>
+            <p id="checkout-datetime"></p>
         </div>
-        <div class="product-container-main">
+        <div id="product-container-main" class="product-container-main">
             <!-- Dynamically added/'scanned' products -->
             <div class="product-item-template" style="display: none;">
                 <button id="edit-product-button">
@@ -21,7 +21,7 @@
                     <div class="product-content">
                         <p class="product-name"></p>
                         <div class="product-info">
-                            <p class="product-quantity">Quantity: </p>
+                            <p class="product-quantity"></p>
                             <p class="product-price">£</p>
                         </div>
                     </div>
@@ -72,5 +72,5 @@
         </div>
     </div>
 </div>
-<!-- <script type="module" src="js/customer_checkout.js"></script> -->
+<script type="module" src="{% static 'js/checkout.js' %}"></script>
 {% endblock %}
