@@ -140,15 +140,19 @@
     margin: 0;
 }
 
+#product-price {
+    font-size: 32px;
+}
+
 .product-item-template img {
     width: 25%;
     height: 120px;
-    object-fit: cover;
+    object-fit: contain;
     max-width: 100%;
     border-radius: 5px;
 }
 
-#edit-product-button {
+.edit-product-button {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -220,7 +224,7 @@
     display: flex; /* Align icon and text */
     align-items: center;
     justify-content: center;
-    gap: 5px; /* Space between icon and text */
+    gap: 5px; /* Space between bag icon and text */
     border: 3px solid #008080;
     color: #008080;
     background-color: #fff;
@@ -233,13 +237,15 @@
 
 #ean-input {
     width: 200px;
+    color: #000;
 }
 
 #add-bag-button, #enter-menu-button {
     cursor: pointer;
 }
 
-#add-bag-button:hover, #enter-menu-button:hover {
+#add-bag-button:hover, #enter-menu-button:hover, 
+#submit-qty-button:hover, #back-button:hover {
     background-color: #008080;
     color: #fff;
 }
@@ -261,4 +267,105 @@
     width: 160px;
     font-weight: bold;
     font-size: 20px;
+}
+
+/* Alter quantity of selected product (Pop-up)*/
+.outer {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Darken rest of page */
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
+
+.qty-remove-popup {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 75%;
+    height: 55%;
+    border-radius: 10px;
+    border: 3px solid #434141;
+    background-color: #fff;
+    padding: 15px;
+}
+
+#qty-title {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.img-and-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.qty-remove-popup img {
+    flex: 0 0 30%;
+    border: 2px solid #434141;
+    width: 75%;
+    height: 200px;
+    object-fit: contain;
+}
+
+.popup-product-text {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 2px;
+}
+
+.qty-and-submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#quantity-input {
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    border: 2px solid #434141;
+    background-color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#submit-qty-button, #back-button {
+    border: 3px solid #008080;
+    color: #008080;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#remove-button {
+    border: 3px solid #ff0000;
+    color: #ff0000;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#remove-button:hover {
+    background-color: #ff0000;
+    color: #fff;
 }

@@ -7,30 +7,54 @@
 {% block content %}
 
 <!-- Rest of content -->
+<!-- Outer layer for pop-ups etc -->
+<div class="outer">
+    <div class="qty-remove-popup">
+        <div class="popup-title">
+            <p id="qty-title">Enter the total quantity for this product:</p>
+        </div>
+        <div class="img-and-name">
+            <img src="" alt="Product Image">
+            <p class="popup-product-text"></p>
+        </div>
+        <div class="qty-and-submit">
+            <p class="popup-product-text">New Quantity:</p>
+            <input type="number" id="quantity-input" min="1" max="999">
+            <p id="quantity-error"></p>
+            <button id="submit-qty-button">Submit</button>
+        </div>
+        <div class="popup-buttons">
+            <button id="remove-button">Remove from basket</button>
+            <button id="back-button">Return to basket</button>
+        </div>
+    </div>
+</div>
+
+<!-- Checkout interface -->
 <div class="checkout-container">
     <div class="product-container">
         <div class="product-container-header">
-            <p id="item-count">{{ num_items }} Items</p>
+            <p id="item-count">0 Items</p>
             <p id="checkout-datetime"></p>
         </div>
         <div id="product-container-main" class="product-container-main">
             <!-- Dynamically added/'scanned' products -->
-            <div class="product-item-template" style="display: none;">
-                <button id="edit-product-button">
-                    <img src="" alt="Product Name">
+            <div id="basket-item" class="product-item-template" style="display: none;">
+                <button id="edit-product-button" class="edit-product-button">
+                    <img src="" alt="Product Image">
                     <div class="product-content">
                         <p class="product-name"></p>
                         <div class="product-info">
-                            <p class="product-quantity"></p>
-                            <p class="product-price">£</p>
+                            <p id="product-quantity" class="product-quantity"></p>
+                            <p id="product-price" class="product-price">£</p>
                         </div>
                     </div>
                 </button>
             </div>
         </div>
         <div class="product-container-footer">
-            <p id="savings-total"> Savings: {{ savings_total }}</p>
-            <p id="basket-total"> Basket Total: {{ basket_total }}</p>
+            <p id="savings-total"> Savings: £0.00</p>
+            <p id="basket-total"> Basket Total: £0.00</p>
         </div>
     </div>
 

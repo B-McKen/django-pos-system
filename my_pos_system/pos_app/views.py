@@ -38,6 +38,7 @@ def scanned_product(request):
 
             # Response data
             response_data = {
+                'EAN': product.EAN,
                 'name': product.name,
                 'price': float(product.price),
                 'discount': product.discount,
