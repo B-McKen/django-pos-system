@@ -36,4 +36,4 @@ class Product(models.Model):
             out = f"{self.name} (EAN: {self.EAN}, Department: {self.dept}, Regular Price: {self.price}, "
             out += f"Discounted Price: {self.discounted_price})"
             return out
-        return f"{self.name} (EAN: {self.EAN}, Price: {self.price})"
+        return f"{self.name} (EAN: {self.EAN}, Department: {self.dept}, Price: {self.price})"
