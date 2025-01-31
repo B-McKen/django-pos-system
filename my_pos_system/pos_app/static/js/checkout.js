@@ -206,4 +206,5 @@ document.getElementById('quantity-input').addEventListener('input', clearError);
 function closeOverlay() {
     document.querySelector('.outer').style.display = 'none';
     document.querySelector('.qty-remove-popup').style.display = 'none';
+    document.querySelector('.PLU-popup').style.display = 'none';
 }
