@@ -219,7 +219,7 @@
     color: #fff;
 }
 
-#add-bag-button, #ean-input, #enter-menu-button {
+#add-bag-button, #ean-input, #member-button {
     display: flex; /* Align icon and text */
     align-items: center;
     justify-content: center;
@@ -235,15 +235,15 @@
 }
 
 #ean-input {
-    width: 200px;
+    width: 50%;
     color: #000;
 }
 
-#add-bag-button, #enter-menu-button {
+#add-bag-button, #member-button {
     cursor: pointer;
 }
 
-#add-bag-button:hover, #enter-menu-button:hover, 
+#add-bag-button:hover, #member-button:hover, 
 #submit-qty-button:hover, .back-button:hover {
     background-color: #008080;
     color: #fff;

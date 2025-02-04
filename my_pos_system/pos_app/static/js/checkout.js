@@ -308,5 +308,16 @@ function clearError() {
 // Remove popup container children
 function emptyPopupContainer(container, template) {
     const productsInPopup = container.querySelectorAll('.PLU-item-template');
-    productsInPopup.forEach(item => item.style.display = 'none');
+
+    productsInPopup.forEach(item => {
+        if (item !== template) {
+            container.removeChild(item); // Remove all except the template
+        }
+    });
+
+    // Remove error message from old menu
+    const noProductsMsg = document.getElementById('no-PLU-msg');
+    if (noProductsMsg) {
+        noProductsMsg.remove();
+    }
 }
