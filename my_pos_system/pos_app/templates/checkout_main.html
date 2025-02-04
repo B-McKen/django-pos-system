@@ -25,23 +25,27 @@
         </div>
         <div class="popup-buttons">
             <button id="remove-button">Remove from basket</button>
-            <button id="back-button">Return to basket</button>
+            <button class="back-button">Return to basket</button>
         </div>
     </div>
-    <div class="PLU-popup">
+    <div id="PLU-popup" class="PLU-popup">
         <div class="popup-title">
             <p id="PLU-title"></p>
         </div>
-        <!-- Dynamically added PLU entries based on department -->
-        <div id="PLU-item" class="PLU-item-template" style="display: none;">
-            <button id="add-PLU-button" class="add-PLU-button">
-                <img src="" alt="PLU Image">
-                <p id="PLU-name"></p>
-                <p id="PLU-price"></p>
-            </button>
+        <div id="PLU-main" class="PLU-main">
+            <!-- Dynamically added PLU entries based on department -->
+            <div id="PLU-item" class="PLU-item-template" style="display: none;">
+                <button id="add-PLU-button" class="add-PLU-button">
+                    <img src="" alt="PLU Image">
+                    <p class="PLU-name"></p>
+                    <div class="PLU-prices">
+                        <p class="PLU-price"></p>
+                    </div>
+                </button>
+            </div>
         </div>
         <div class="PLU-footer">
-            <button id="back-button">Return to basket</button>
+            <button class="back-button">Return to basket</button>
         </div>
     </div>
 </div>

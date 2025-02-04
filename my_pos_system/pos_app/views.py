@@ -1,5 +1,6 @@
 # pylint: disable=no-member
 import logging
+import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Product
@@ -39,6 +40,7 @@ def scanned_product(request):
             # Response data
             response_data = {
                 'EAN': product.EAN,
+                'dept': product.dept,
                 'name': product.name,
                 'price': float(product.price),
                 'discount': product.discount,
@@ -49,6 +51,40 @@ def scanned_product(request):
             return JsonResponse(response_data)
         except Product.DoesNotExist:
             return JsonResponse({'error': 'Product Not Found'}, status=404)
+
+def PLU_products(request):
+    """
+    Fetch details of products in a specific department (e.g. fruit, veg, etc.).
+    """
+    try:
+        if request.method == 'GET':
+            search_dept = request.GET.get('dept')
+            print(f"Received department query: {search_dept}")  # Debugging
+            
+            products = Product.objects.filter(dept=search_dept)
+
+            if not products.exists():
+                return JsonResponse({'error': 'No products found in this department'}, status=404)
+
+            response_data = [
+                {
+                    'EAN': product.EAN,
+                    'dept': product.dept,
+                    'name': product.name,
+                    'price': product.price,
+                    'discount': product.discount,
+                    'discounted_price': product.discounted_price,
+                    'image': product.image.url if product.image else None,
+                    'available_qty': product.available_qty
+                }
+                for product in products
+            ]
+
+            return JsonResponse(response_data, safe=False)
+
+    except Exception as e:
+        print(f"API Error: {e}")
+        return JsonResponse({'error': 'Server error'}, status=500)
 
 def item_sales_report(request):
     # Query all products in DB

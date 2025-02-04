@@ -1,6 +1,9 @@
 # Ignore virtual env
 pos_env/
 
+# Ignore MEDIA root folder as Django finds this
+media/
+
 # Python cache files
 __pycache__/
 *.pyc

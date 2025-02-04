@@ -217,7 +217,6 @@
 .other-item-button:hover {
     background-color: #008080;
     color: #fff;
-    border-color: #008080;
 }
 
 #add-bag-button, #ean-input, #enter-menu-button {
@@ -245,7 +244,7 @@
 }
 
 #add-bag-button:hover, #enter-menu-button:hover, 
-#submit-qty-button:hover, #back-button:hover {
+#submit-qty-button:hover, .back-button:hover {
     background-color: #008080;
     color: #fff;
 }
@@ -298,6 +297,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 24px;
+    border-bottom: 2px solid #434141;
 }
 
 .img-and-name {
@@ -343,7 +343,7 @@
     font-size: 20px;
 }
 
-#submit-qty-button, #back-button {
+#submit-qty-button, .back-button {
     border: 3px solid #008080;
     color: #008080;
     background-color: #fff;
@@ -368,4 +368,91 @@
 #remove-button:hover {
     background-color: #ff0000;
     color: #fff;
+}
+
+/* Select items by department (popup) */
+.PLU-popup {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 75%;
+    height: 55%;
+    border-radius: 10px;
+    border: 3px solid #434141;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.popup-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 24px;
+    padding: 10px 0;
+}
+
+#PLU-title {
+    text-align: center;
+}
+
+/* Scrollable popup area populated with templates */
+.PLU-main {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    width: 100%;
+    height: 80vh;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.PLU-item-template {
+    flex: 0 0 calc(20% - 15px);
+    max-height: 40%;
+    margin: 0 15px 15px;
+}
+
+.add-PLU-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    margin: 5px;
+    border: 3px solid #434141;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.add-PLU-button:hover {
+    background-color: #008080;
+    color: #fff;
+}
+
+.add-PLU-button img {
+    width: 100%;
+    height: 60%;
+    object-fit: contain;
+}
+
+.PLU-name {
+    font-weight: bold;
+}
+.PLU-prices {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.PLU-footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
 }
