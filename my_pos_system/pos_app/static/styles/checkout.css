@@ -11,7 +11,7 @@
 .checkout-container {
     display: flex;
     flex-direction: row; /* Split product and options area in half */
-    border: 20px solid #434141;
+    border: 15px solid #434141;
     height: 80vh;
 }
 
@@ -61,6 +61,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     margin: 10px;
+    padding: 0 15px;
     gap: 20px;
     height: 100%;
     overflow-y: auto;
@@ -280,6 +281,34 @@
     z-index: 2;
 }
 
+.generic-error-popup {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 45%;
+    height: 35%;
+    border-radius: 10px;
+    border: 3px solid #434141;
+    background-color: #fff;
+    padding: 15px; 
+}
+
+.generic-error-popup h4 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.generic-error-message {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.generic-error-popup button {
+    width: 50%;
+}
+
 .qty-remove-popup {
     display: none;
     flex-direction: column;
@@ -304,18 +333,29 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     gap: 15px;
 }
 
 .qty-remove-popup img {
     flex: 0 0 30%;
     border: 2px solid #434141;
-    width: 75%;
-    height: 200px;
+    width: 70%;
+    height: 180px;
     object-fit: contain;
 }
 
 .popup-product-text {
+    flex-grow: 1;
+    text-align: center;
+    align-self: flex-start;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 2px;
+}
+
+#qty-heading {
+    text-align: center;
     font-weight: bold;
     font-size: 20px;
     margin: 2px;
@@ -325,7 +365,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .popup-buttons {
@@ -341,6 +381,11 @@
     background-color: #fff;
     font-weight: bold;
     font-size: 20px;
+}
+
+#qty-error-message, .generic-error-message {
+    color: #ff0000;
+    font-weight: bold;
 }
 
 #submit-qty-button, .back-button {
@@ -380,7 +425,7 @@
     border-radius: 10px;
     border: 3px solid #434141;
     background-color: #fff;
-    padding: 15px;
+    padding: 25px;
 }
 
 .popup-title {
@@ -410,7 +455,7 @@
 }
 
 .PLU-item-template {
-    flex: 0 0 calc(20% - 15px);
+    flex: 0 0 calc(20% - 10px);
     max-height: 40%;
     margin: 0 15px 15px;
 }

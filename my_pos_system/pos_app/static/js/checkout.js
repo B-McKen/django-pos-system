@@ -2,12 +2,14 @@
 
 // Global variables
 let productInfo = {};  // Stores information about the selected product
+let isMember = false; // Assume customer is not a member to begin with
 
 document.addEventListener('DOMContentLoaded', () => {
     displayTime();
     setInterval(displayTime, 1000);
 
     const eanInput = document.getElementById('ean-input');
+    const memberButton = document.getElementById('member-button');
     const bagButton = document.getElementById('add-bag-button');
     const productContainer = document.getElementById('product-container-main');
     const fruitButton = document.getElementById('fruit-button');
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pluContainer = document.getElementById('PLU-main');
 
     eanInput.addEventListener('keypress', handleEANInput);
+    memberButton.addEventListener('click', handleMemberClick);
     bagButton.addEventListener('click', () => fetchProduct(5057373964052));
     productContainer.addEventListener('click', handleProductClick);
     fruitButton.addEventListener('click', () => handlePLUClick('fruit'));
@@ -39,6 +42,36 @@ function handleEANInput(event) {
         }
     }
 }
+
+// Handle membership button click
+function handleMemberClick() {
+    const items = document.getElementById('product-container-main');
+    // Convert to array to loop backwards to prevent updated items appearing backwards
+    const products = [...items.querySelectorAll('.product-item-template:not([style*="display: none"])')];
+
+    // Toggle membership
+    isMember = !isMember;
+    console.log(`Now!!! Membership: ${isMember}, No. Products: ${products.length}`);
+
+    // Button style based on membership status
+    updateButtonStyle(isMember);
+
+    // Update prices for all items based on membership status
+    if (products.length !== 0) {
+        products.reverse().forEach(product => {
+            updateQuantity(product, product.dataset.quantity)
+        });
+        //for (let product of products) {
+            // Change prices
+            //updateQuantity(product, product.dataset.quantity);
+            // Calls updateTotals after
+    }
+    
+    //}
+    // Display relevant alert afterwards
+    alert(isMember ? 'Membership Activated!' : 'Membership Deactivated!');
+}
+
 
 function handlePLUClick(department) {
     // Display overlay relevant to department
@@ -63,6 +96,7 @@ function handleProductClick(event) {
                 EAN: productContainer.dataset.ean,
                 image: productContainer.querySelector('img').src,
                 name: productContainer.querySelector('.product-name').textContent,
+                availableQuantity: productContainer.dataset.availableQuantity
             };
             displayOverlay(document.querySelector('.qty-remove-popup'), productInfo);
         }
@@ -87,7 +121,11 @@ function fetchProduct(EAN) {
             return response.json();
         })
         .then(handleScan)
-        .catch(() => alert('Product not found'));
+        .catch((error) => {
+            if (error.message === 'Product not found') {
+                alert('Product not found!');
+            }
+        });
 }
 
 // Fetch products belonging to a department
@@ -165,17 +203,58 @@ function handleAddPLU(event) {
 function handleScan(product) {
     const items = document.getElementById('product-container-main');
     const products = items.querySelectorAll('.product-item-template:not([style*="display: none"])');
+    const overlay = document.querySelector('.outer');
+    const popup = document.querySelector('.generic-error-popup');
+    const errorMsg = popup.querySelector('.generic-error-message');
     let productFound = false;
+
+    
+    // Check if product is out of stock before proceeding
+    if (product.available_qty === 0) {
+        console.log('Product out of stock! Displaying error message.');
+        overlay.style.display = 'flex';
+        popup.style.display = 'flex';
+
+        errorMsg.textContent = 
+        `Unfortunately, this product is out of stock and cannot be added to the basket. Sorry!`;
+        return;
+    }
 
     // Search to see if the product is already in the basket (subsequent scan)
     products.forEach(item => {
         if (item.dataset.ean === product.EAN) {
-            item.dataset.quantity++;
-            updateQuantity(item, item.dataset.quantity);
+            // Found product
             productFound = true;
+            // Available qty exceeded
+            if ((parseInt(item.dataset.quantity) + 1) > parseInt(item.dataset.availableQuantity)) {
+                console.log('Available item quantity exceeded! Displaying error message.');
+        
+                overlay.style.display = 'flex';
+                popup.style.display = 'flex';
+                
+                errorMsg.textContent =
+                `Unfortunately, we only have ${item.dataset.availableQuantity} of this product left in stock
+                and so you cannot add another to the basket. Sorry!`;
+        
+            // Maximum 999 exceeded
+            } else if((parseInt(item.dataset.quantity) + 1) > 999) {
+                console.log('Maximum allowed item quantity exceeded! Displaying error message.');
+        
+                overlay.style.display = 'flex';
+                popup.style.display = 'flex';
+        
+                errorMsg.textContent = 
+                `Unfortunately, the maximum quantity per item per transaction is 999 and so you cannot
+                add another to the basket. Sorry!`;
+
+            // No quantity-related issues found - add another to basket
+            } else {
+                item.dataset.quantity++;
+                updateQuantity(item, item.dataset.quantity);
+            }
         }
     });
-
+    
     // First time product has appeared in basket
     if (!productFound) {
         addNewProduct(product);
@@ -199,7 +278,7 @@ function addNewProduct(product) {
         newProduct.querySelector('img').src = product.image_url;
         newProduct.querySelector('.product-name').textContent = product.name;
         newProduct.querySelector('.product-quantity').textContent = `Quantity: 1`;
-        newProduct.querySelector('.product-price').textContent = product.discount
+        newProduct.querySelector('.product-price').textContent = product.discount && isMember
             ? `£${parseFloat(product.discounted_price).toFixed(2)} (D)`
             : `£${parseFloat(product.price).toFixed(2)}`;
         newProduct.querySelector('.edit-product-button').id = `edit-product-${product.EAN}`;
@@ -220,9 +299,16 @@ function updateQuantity(product, newQuantity) {
     const unitPrice = parseFloat(product.dataset.unitPrice);
     const discountedUnitPrice = parseFloat(product.dataset.discountedUnitPrice);
     const hasDiscount = product.dataset.discount === "true";
-    const newTotalPrice = hasDiscount ? discountedUnitPrice * newQuantity : unitPrice * newQuantity;
-    product.querySelector('.product-price').textContent = `£${newTotalPrice.toFixed(2)}${hasDiscount ? ' (D)' : ''}`;
+    const newTotalPrice = hasDiscount && isMember ? discountedUnitPrice * newQuantity : unitPrice * newQuantity;
     
+    const priceElement = product.querySelector('.product-price');
+
+    // Remove existing (D) when membership turned off
+    priceElement.textContent = `£${newTotalPrice.toFixed(2)}`;
+    if(hasDiscount && isMember) {
+        priceElement.textContent += ' (D)';
+    }
+
     // Move product with new quantity to the top
     const container = document.getElementById('product-container-main');
     container.insertBefore(product, container.firstChild);
@@ -231,7 +317,6 @@ function updateQuantity(product, newQuantity) {
 
 // Update savings, basket, and item totals
 function updateTotals() {
-    const member = true;  // Assuming member status for discounts
     const items = document.getElementById('product-container-main');
     const products = items.querySelectorAll('.product-item-template:not([style*="display: none"])');
     let itemCount = 0, savingsTotal = 0, rawBasketTotal = 0, basketTotal = 0;
@@ -243,8 +328,8 @@ function updateTotals() {
         const hasDiscount = item.dataset.discount === "true";
 
         rawBasketTotal += quantity * price;
-        basketTotal += hasDiscount && member ? quantity * discountedPrice : quantity * price;
-        if (hasDiscount && member) savingsTotal = rawBasketTotal - basketTotal;
+        basketTotal += hasDiscount && isMember ? quantity * discountedPrice : quantity * price;
+        if (hasDiscount && isMember) savingsTotal = rawBasketTotal - basketTotal;
 
         itemCount += quantity;
     });
@@ -284,7 +369,11 @@ document.getElementById('submit-qty-button').addEventListener('click', () => {
     const qtyErrorMsg = document.getElementById('qty-error-message');
     const qtyValue = parseInt(quantityInput.value);
 
-    if (!qtyValue || qtyValue < 1 || qtyValue > productInfo.availableQuantity) {
+    if (!qtyValue || qtyValue < 1 || qtyValue > 999) {
+        qtyErrorMsg.textContent = 'Please enter a valid quantity between 1 and 999';
+        qtyErrorMsg.style.display = 'inline-block';
+    } else if (qtyValue > productInfo.availableQuantity) {
+        qtyErrorMsg.textContent = `Unfortunately, we only have ${productInfo.availableQuantity} of this product left in stock. Please select a different amount.`;
         qtyErrorMsg.style.display = 'inline-block';
     } else {
         updateQuantity(document.getElementById(productInfo.id), newQuantity);
@@ -297,12 +386,44 @@ function closeOverlay() {
     document.querySelector('.outer').style.display = 'none';
     document.querySelector('.qty-remove-popup').style.display = 'none';
     document.querySelector('.PLU-popup').style.display = 'none';
+    document.querySelector('.generic-error-popup').style.display = 'none';
 }
 
 // Clear error messages
 function clearError() {
     const qtyErrorMsg = document.getElementById('qty-error-message');
     qtyErrorMsg.style.display = 'none';
+}
+
+/* Helper functions */
+// Update member button styling
+function updateButtonStyle(isMember) {
+    const memberButton = document.getElementById('member-button');
+    if (isMember) {
+        memberButton.style.border = '3px solid rgb(81, 164, 17)';
+        memberButton.style.color = 'rgb(81, 164, 17)';
+        memberButton.textContent = 'Member: ON';
+        memberButton.onmouseover = () => {
+            memberButton.style.backgroundColor = 'rgb(81, 164, 17)';
+            memberButton.style.color = '#fff';
+        };
+        memberButton.onmouseout = () => {
+            memberButton.style.backgroundColor = '#fff';
+            memberButton.style.color = 'rgb(81, 164, 17)';
+        }
+    } else {
+        memberButton.style.border = '3px solid #008080';
+        memberButton.style.color = '#008080';
+        memberButton.textContent = 'Member: OFF';
+        memberButton.onmouseover = () => {
+            memberButton.style.backgroundColor = '#008080';
+            memberButton.style.color = '#fff';
+        };
+        memberButton.onmouseout = () => {
+            memberButton.style.backgroundColor = '#fff';
+            memberButton.style.color = '#008080';
+        };
+    }
 }
 
 // Remove popup container children

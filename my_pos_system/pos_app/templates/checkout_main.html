@@ -9,6 +9,11 @@
 <!-- Rest of content -->
 <!-- Outer layer for pop-ups etc -->
 <div class="outer">
+    <div class="generic-error-popup">
+        <h4>Pardon Our Dust...</h4>
+        <p class="generic-error-message"></p>
+        <button class="back-button">Return to basket</button>
+    </div>
     <div class="qty-remove-popup">
         <div class="popup-title">
             <p id="qty-title">Enter the total quantity for this product:</p>
@@ -18,9 +23,9 @@
             <p class="popup-product-text"></p>
         </div>
         <div class="qty-and-submit">
-            <p class="popup-product-text">New Quantity:</p>
+            <p id="qty-heading">New Quantity:</p>
             <input type="number" id="quantity-input" min="1" max="999">
-            <p id="quantity-error"></p>
+            <p id="qty-error-message"></p>
             <button id="submit-qty-button">Submit</button>
         </div>
         <div class="popup-buttons">
@@ -81,7 +86,7 @@
     <div class="options-container">
         <div class="options-container-header">
             <input type="text" id="ean-input" placeholder="Search for a product">
-            <button id="member-button" onclick="alert('Membership Activated!')">Membership</button>
+            <button id="member-button">Membership</button>
         </div>
         <div class="options-container-main">
             <p id="other-items-title"> Other Items</p>
