@@ -54,6 +54,10 @@
     border-color: #5a5858;
 }
 
+.options-container-header {
+    position: relative;
+}
+
 .product-container-main {
     display: flex;
     flex-direction: column;
@@ -235,9 +239,42 @@
     font-size: 20px;
 }
 
+/* EAN input and dropdown menu */
 #ean-input {
     width: 50%;
-    color: #000;
+    color: #008080;
+}
+
+.dropdown-content {
+    margin-left: 8px;
+    margin-top: 4px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 54%;
+    background: white;
+    color: #008080;
+    border: 3px solid #008080;
+    overflow-y: auto;
+    max-height: 300px;
+    z-index: 1000;
+    display: none;
+}
+
+.dropdown-result {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.dropdown-result:hover {
+    color: #fff;
+    background-color: #008080;
+    cursor: pointer;
+}
+
+#product-dropdown.active {
+    display: block;
 }
 
 #add-bag-button, #member-button {

@@ -27,6 +27,37 @@ def registration_page(request):
     return render(request, "registration.html")
 
 # DB interaction
+def search_results(request):
+    """
+    Fetch any matching results when text is entered into the search bar.
+    """
+    try:
+        if request.method == 'GET':
+            search_term = request.GET.get('search-term')
+            print(f"Received search parameter: {search_term}")
+
+            # Fetch products containing a case insensitive match (QuerySet)
+            matching_products = Product.objects.filter(name__icontains=search_term)
+
+            # Return no result to occupy auto-complete bar
+            if not matching_products.exists():
+                return JsonResponse({'error': 'No matching products found!'}, status=404)
+
+            # Put matching product information into JSON structure
+            response_data = [
+                {
+                    'EAN': product.EAN,
+                    'name': product.name,  
+                }
+                for product in matching_products
+            ]
+
+            return JsonResponse(response_data, safe=False)
+
+    except Exception as e:
+        print(f"API Error: {e}")
+        return JsonResponse({'error': 'Server error'}, status=500)
+
 def scanned_product(request):
     """
     Fetch details of a product based on the EAN provided in the GET request.
@@ -60,7 +91,7 @@ def PLU_products(request):
         if request.method == 'GET':
             search_dept = request.GET.get('dept')
             print(f"Received department query: {search_dept}")  # Debugging
-            
+
             products = Product.objects.filter(dept=search_dept)
 
             if not products.exists():

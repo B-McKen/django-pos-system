@@ -14,5 +14,6 @@ urlpatterns = [
     # Below are for views / JS interaction
     path("api/product/", views.scanned_product, name="Scanned Product"),
     path("api/product/department/", views.PLU_products, name="Products in Department"),
+    path("api/search-product/", views.search_results, name="Search Results"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

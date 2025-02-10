@@ -86,6 +86,8 @@
     <div class="options-container">
         <div class="options-container-header">
             <input type="text" id="ean-input" placeholder="Search for a product">
+            <!-- Dropdown menu for selecting a product if user doesn't have barcode number to hand -->
+            <div id="product-dropdown" class="dropdown-content"></div>
             <button id="member-button">Membership</button>
         </div>
         <div class="options-container-main">
@@ -121,5 +123,8 @@
         </div>
     </div>
 </div>
-<script type="module" src="{% static 'js/checkout.js' %}"></script>
+<script src="{% static 'js/jsCheckout/checkoutBasket.js' %}"></script>
+<script src="{% static 'js/jsCheckout/checkoutInteraction.js' %}"></script>
+<script src="{% static 'js/jsCheckout/checkoutUtils.js' %}"></script>
+<script src="{% static 'js/jsCheckout/checkoutMain.js' %}"></script>
 {% endblock %}
