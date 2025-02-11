@@ -7,20 +7,27 @@ function focusSearchBar() {
 
 // Handle search bar input
 function handleEANInput(event) {
+    let searchTimeout;
     let searchTerm = event.target.value.trim();
     console.log(`searchTerm = ${searchTerm}`);
+
+    clearTimeout(searchTimeout); // Prevent multiple rapid requests
+
     // EAN entered and Enter key pressed
     if (event.key === 'Enter') {
         const scannedEAN = event.target.value.trim();
         if (scannedEAN) {
             fetchProduct(scannedEAN);
+            clearDropdown();
             event.target.value = '';
         } else {
             alert('Please enter a valid EAN');
         }
+    }
     // Something typed but no Enter key pressed
-    } else if(searchTerm.length >= 2) {
+    else if(searchTerm.length >= 2) {
         fetchSearchResults(searchTerm);
+        clearDropdown();
     }
 }
 
@@ -31,17 +38,18 @@ function handleDropdown(products) {
     const enterKey = new KeyboardEvent('keypress', {
         key: 'Enter', keyCode: 13
     });
-
-    // Make dropdown active
-    dropdownMenu.classList.add('active');
     
     // If there are no matches, show 'error'
     if (products.error) {
+        // Make dropdown active
+        dropdownMenu.classList.add('active');
         let dropdownItem = document.createElement('DIV');
         dropdownItem.setAttribute('class', 'dropdown-result');
         dropdownItem.innerHTML = products.error;
         dropdownMenu.appendChild(dropdownItem);
     } else {
+        // Make dropdown active
+        dropdownMenu.classList.add('active');
         for (i = 0; i < products.length; i++) {
             // Create div element for matching result
             let dropdownItem = document.createElement('DIV');

@@ -1,6 +1,7 @@
 # pylint: disable=no-member
 import logging
 import json
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Product
@@ -36,8 +37,11 @@ def search_results(request):
             search_term = request.GET.get('search-term')
             print(f"Received search parameter: {search_term}")
 
-            # Fetch products containing a case insensitive match (QuerySet)
-            matching_products = Product.objects.filter(name__icontains=search_term)
+            # Fetch products containing a case insensitive name match
+            # OR an exact match with EAN / barcode number
+            matching_products = Product.objects.filter(
+                Q(name__icontains=search_term) | Q(EAN__iexact=search_term)
+            )
 
             # Return no result to occupy auto-complete bar
             if not matching_products.exists():

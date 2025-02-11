@@ -123,3 +123,11 @@ function clearDropdown() {
         item.remove();
     }
 }
+
+// Continually monitor search bar to clear dropdown when empty
+setInterval(() => {
+    const eanInput = document.getElementById('ean-input');
+    if (eanInput && eanInput.value.trim() === '') {
+        clearDropdown();
+    }
+}, 1);
