@@ -15,6 +15,16 @@
     height: 80vh;
 }
 
+.pay-container {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; /* Split product and options area in half */
+    border: 15px solid #434141;
+    height: 80vh;
+    padding: 0 10px 0;
+}
+
 .product-container, .options-container {
     flex: 1; /* Take equal space to each other */
     display: flex; /* It's own flexbox too */
@@ -296,9 +306,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid #434141;
-    color: #434141;
-    background-color: #fff;
     border-radius: 10px;
     padding: 15px;
     width: 160px;
@@ -306,7 +313,104 @@
     font-size: 20px;
 }
 
-/* Alter quantity of selected product (Pop-up)*/
+#pay-button.disabled {
+    border: 3px solid #434141;
+    color: #434141;
+    background-color: #fff;
+}
+
+#pay-button.active {
+    background-color: #fff;
+    color: #008080;
+    border: 3px solid #008080;
+}
+
+#pay-button.active:hover {
+    background-color: #008080;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Payment screen elements */
+.pay-screen-button {
+    border: 3px solid #008080;
+    color: #008080;
+    background-color: #dacfbd;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    width: 220px;
+    height: 60px;
+}
+
+.pay-screen-button:hover {
+    background-color: #008080;
+    color: #fff;
+}
+
+.pay-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.pay-header p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.pay-main {
+    text-align: center;
+    align-items: center;
+    padding: 25px 0 0;
+}
+
+.pay-main p {
+    font-size: 75px;
+    font-weight: bold;
+}
+
+#pay-savings-total {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    width: 240px;
+    padding: 15px 30px 15px;
+    background-color: #ffee00;
+    border-radius: 10px;
+    margin-top: -80px;
+}
+
+.pay-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+
+.pay-footer p {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.payment-options {
+    display: flex;
+    gap: 100px;
+}
+
+#cash-button, #card-button {
+    width: 180px;
+    height: 180px;
+    border-radius: 80px;
+    font-size: 40px;
+}
+
+/* Alter quantity of selected product (Pop-up) */
 .outer {
     position: fixed;
     display: none;
@@ -436,7 +540,7 @@
     cursor: pointer;
 }
 
-#remove-button {
+#remove-button, #void-button {
     border: 3px solid #ff0000;
     color: #ff0000;
     background-color: #fff;
@@ -447,7 +551,11 @@
     cursor: pointer;
 }
 
-#remove-button:hover {
+#void-button {
+    background-color: #dacfbd;
+}
+
+#remove-button:hover, #void-button:hover {
     background-color: #ff0000;
     color: #fff;
 }

@@ -1,5 +1,10 @@
 /* Display time, overlay, error handling */
 
+// Give focus to search bar after every action
+function focusSearchBar() {
+    document.getElementById('ean-input').focus();
+}
+
 // Display time
 function displayTime() {
     const currentTime = new Date();
@@ -58,6 +63,7 @@ function closeOverlay() {
     document.querySelector('.qty-remove-popup').style.display = 'none';
     document.querySelector('.PLU-popup').style.display = 'none';
     document.querySelector('.generic-error-popup').style.display = 'none';
+    focusSearchBar();
 }
 
 // Clear error messages
@@ -67,6 +73,20 @@ function clearError() {
 }
 
 /* Helper functions */
+/* Update Pay button style when basket is not empty */
+function updatePayButtonStyle() {
+    const payButton = document.getElementById('pay-button');
+    if (itemCount > 0) {
+        payButton.disabled = false;
+        payButton.classList.add('active');
+        payButton.classList.remove('disabled');
+    } else {
+        payButton.disabled = true;
+        payButton.classList.add('disabled');
+        payButton.classList.remove('active');
+    }
+}
+
 // Update member button styling
 function updateButtonStyle(isMember) {
     const memberButton = document.getElementById('member-button');
@@ -131,3 +151,33 @@ setInterval(() => {
         clearDropdown();
     }
 }, 1);
+
+// Exit Pay screen when back button clicked
+function exitPayScreen() {
+    const checkoutScreen = document.getElementById('checkout-container');
+    const paymentScreen = document.getElementById('pay-container');
+
+    // Display checkout interface, hide payment screen
+    checkoutScreen.style.display = 'flex';
+    paymentScreen.style.display = 'none';
+    focusSearchBar();
+}
+
+// Void entire shop, start again
+function voidShop() {
+    window.alert('Transaction Voided!');
+    exitPayScreen();
+
+    // Delete all products, reset basket to default values
+    const items = document.getElementById('product-container-main');
+    const products = items.querySelectorAll('.product-item-template:not([style*="display: none"])');
+    
+    products.forEach(item => {
+        item.remove();
+        updateTotals();
+    });
+    // Reset membership button in case it is currently active
+    isMember = false;
+    updateButtonStyle(isMember);
+    focusSearchBar();
+}

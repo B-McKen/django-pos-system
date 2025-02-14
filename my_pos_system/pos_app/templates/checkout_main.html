@@ -55,8 +55,29 @@
     </div>
 </div>
 
+<!-- Pay Screen (replaces checkout interface when displayed) -->
+<div id="pay-container" class="pay-container">
+    <div class="pay-header">
+        <button id="pay-return-button" class="pay-screen-button">Return to basket</button>
+        <p id="pay-item-count">Items:</p>
+        <button id="void-button" class="pay-screen-button">Void Shop</button>
+    </div>
+    <div class="pay-main">
+        <p id="total-outstanding-title">TOTAL:</p>
+        <p id="outstanding-balance">£5.00</p>
+    </div>
+    <p id="pay-savings-total">Savings:</p>
+    <div class="pay-footer">
+        <p>Select a payment method:</p>
+        <div class="payment-options">
+            <button id="cash-button" class="pay-screen-button">Cash</button>
+            <button id="card-button" class="pay-screen-button">Card</button>
+        </div>
+    </div>
+</div>
+
 <!-- Checkout interface -->
-<div class="checkout-container">
+<div id="checkout-container" class="checkout-container">
     <div class="product-container">
         <div class="product-container-header">
             <p id="item-count">0 Items</p>

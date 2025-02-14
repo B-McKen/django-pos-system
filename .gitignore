@@ -4,6 +4,9 @@ pos_env/
 # Ignore MEDIA root folder as Django finds this
 media/
 
+# Ignore old / outdated versions of files
+checkoutOld.js
+
 # Python cache files
 __pycache__/
 *.pyc

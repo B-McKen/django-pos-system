@@ -1,10 +1,5 @@
 /* Handle inputs, clicks, event handlers */
 
-// Give focus to search bar after every action
-function focusSearchBar() {
-    document.getElementById('ean-input').focus();
-}
-
 // Handle search bar input
 function handleEANInput(event) {
     let searchTimeout;
@@ -92,6 +87,7 @@ function handleMemberClick() {
     }
     // Display relevant alert afterwards
     alert(isMember ? 'Membership Activated!' : 'Membership Deactivated!');
+    focusSearchBar();
 }
 
 
@@ -160,5 +156,35 @@ function handleProductClick(event) {
             };
             displayOverlay(document.querySelector('.qty-remove-popup'), productInfo);
         }
+    }
+}
+
+// Handle displaying pay screen upon click
+function handlePayButtonClick() {
+    const payButton = document.getElementById('pay-button');
+    const checkoutScreen = document.getElementById('checkout-container');
+    const paymentScreen = document.getElementById('pay-container');
+    const payItemCount = document.getElementById('pay-item-count');
+    const payBalance = document.getElementById('outstanding-balance');
+    const paySavings = document.getElementById('pay-savings-total');
+    const backButton = document.getElementById('pay-return-button');
+    const voidButton = document.getElementById('void-button');
+
+    // Check if payButton is active or disabled (greyed-out)
+    if (payButton.disabled) {
+        console.log('Pay button is disabled but Im ignoring you EVIL DJANGO MWAHAHAHAHAHA');
+        return; // Nothing happens
+    } else {
+        // Display pay container, hide checkout interface
+        checkoutScreen.style.display = 'none';
+        paymentScreen.style.display = 'flex';
+
+        // Populate basket values on screen
+        payItemCount.textContent = `Items: ${itemCount}`;
+        payBalance.textContent = `£${basketTotal.toFixed(2)}`;
+        paySavings.textContent = `Savings £${savingsTotal.toFixed(2)}`;
+
+        backButton.addEventListener('click', exitPayScreen);
+        voidButton.addEventListener('click', voidShop);
     }
 }

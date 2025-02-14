@@ -3,6 +3,9 @@
 // Global variables
 let productInfo = {};  // Stores information about the selected product
 let isMember = false; // Assume customer is not a member to begin with
+let itemCount = 0;
+let savingsTotal = 0;
+let basketTotal = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     displayTime();
@@ -16,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const vegButton = document.getElementById('veg-button');
     const bakeryButton = document.getElementById('bakery-button');
     const miscButton = document.getElementById('misc-button');
+    const payButton = document.getElementById('pay-button');
     const pluContainer = document.getElementById('PLU-main');
 
     eanInput.addEventListener('input', handleEANInput);
@@ -27,9 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
     vegButton.addEventListener('click', () => handlePLUClick('veg'));
     bakeryButton.addEventListener('click', () => handlePLUClick('bakery'));
     miscButton.addEventListener('click', () => handlePLUClick('misc'));
+    payButton.addEventListener('click', handlePayButtonClick);
     pluContainer.addEventListener('click', handleAddPLU);
     document.addEventListener('click', clearDropdown);
 
     // Give focus to the search bar
     focusSearchBar();
+    // Initialise payButton to be disabled
+    updatePayButtonStyle();
 });

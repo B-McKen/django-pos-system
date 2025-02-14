@@ -180,7 +180,12 @@ function updateQuantity(product, newQuantity) {
 function updateTotals() {
     const items = document.getElementById('product-container-main');
     const products = items.querySelectorAll('.product-item-template:not([style*="display: none"])');
-    let itemCount = 0, savingsTotal = 0, rawBasketTotal = 0, basketTotal = 0;
+    
+    // Reset totals before recalculating
+    itemCount = 0;
+    savingsTotal = 0;
+    let rawBasketTotal = 0;
+    basketTotal = 0;
 
     products.forEach(item => {
         const quantity = parseInt(item.dataset.quantity);
@@ -198,5 +203,7 @@ function updateTotals() {
     document.getElementById('item-count').textContent = `${itemCount} Item${itemCount > 1 ? 's' : ''}`;
     document.getElementById('savings-total').textContent = `Savings: £${savingsTotal.toFixed(2)}`;
     document.getElementById('basket-total').textContent = `Basket Total: £${basketTotal.toFixed(2)}`;
-}
 
+    // Enable / disable Pay button according to itemCount
+    updatePayButtonStyle();
+}
