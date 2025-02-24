@@ -63,17 +63,20 @@ function closeOverlay() {
     document.querySelector('.qty-remove-popup').style.display = 'none';
     document.querySelector('.PLU-popup').style.display = 'none';
     document.querySelector('.generic-error-popup').style.display = 'none';
+    document.getElementById('pay-amount-popup').style.display = 'none';
     focusSearchBar();
 }
 
 // Clear error messages
 function clearError() {
     const qtyErrorMsg = document.getElementById('qty-error-message');
+    const paymentError = document.getElementById('pay-amount-error-message');
     qtyErrorMsg.style.display = 'none';
+    paymentError.style.display = 'none';
 }
 
 /* Helper functions */
-/* Update Pay button style when basket is not empty */
+/* Update Pay button style when basket is / is not empty */
 function updatePayButtonStyle() {
     const payButton = document.getElementById('pay-button');
     if (itemCount > 0) {
@@ -84,6 +87,21 @@ function updatePayButtonStyle() {
         payButton.disabled = true;
         payButton.classList.add('disabled');
         payButton.classList.remove('active');
+    }
+}
+
+// Grey out back button when part-payment received
+function updateBackButtonStyle() {
+    const backButton = document.getElementById('pay-return-button');
+
+    if (outstandingBalance < basketTotal) {
+        backButton.disabled = true;
+        backButton.classList.add('disabled');
+        backButton.classList.remove('active');
+    } else {
+        backButton.disabled = false;
+        backButton.classList.add('active');
+        backButton.classList.remove('disabled');
     }
 }
 
@@ -176,8 +194,50 @@ function voidShop() {
         item.remove();
         updateTotals();
     });
-    // Reset membership button in case it is currently active
+    // Reset membership button
     isMember = false;
     updateButtonStyle(isMember);
+    resetCounters();
+    updateBackButtonStyle();
     focusSearchBar();
+}
+
+// Reset all global counters to default (if transaction voided or complete)
+function resetCounters() {
+    itemCount = 0;
+    savingsTotal = 0;
+    basketTotal = 0;
+    outstandingBalance = 0;
+    cashPaid = 0;
+    cardPaid = 0;
+    changeDue = 0;
+}
+
+// Update outstanding balance on pay screen and prevent button clicking
+function updatePayScreen() {
+    const paymentScreen = document.getElementById('pay-container');
+    const backButton = document.getElementById('pay-return-button');
+
+}
+// Payment method error / invalid
+function displayPaymentErrorMsg(errorType) {
+    console.log(`Error type is ${errorType}`);
+
+    const paymentError = document.getElementById('pay-amount-error-message');
+    
+    // Display relevant error message depending on errorType
+    switch (errorType) {
+        case "cashOver":
+            paymentError.textContent = "Cannot pay more than £100 over the transaction value in cash.";
+            break;
+        case "negative":
+            paymentError.textContent = "Please enter a valid amount.";
+            break;
+        case "cardOver":
+            paymentError.textContent = "Cannot pay more than the outstanding balance by card.";
+            break;
+        default:
+            paymentError.textContent = "Something went wrong. Sorry.";
+    }
+    paymentError.style.display = 'inline-block';
 }

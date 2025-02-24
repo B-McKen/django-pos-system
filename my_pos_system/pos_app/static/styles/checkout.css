@@ -410,6 +410,61 @@
     font-size: 40px;
 }
 
+/* Return button disabled after part-payment */
+#pay-return-button.disabled {
+    border: 3px solid #434141;
+    color: #434141;
+    background-color: #dacfbd;
+    cursor: default;
+}
+
+#pay-return-button.active {
+    background-color: #dacfbd;
+    color: #008080;
+    border: 3px solid #008080;
+}
+
+#pay-return-button.active:hover {
+    background-color: #008080;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Pay Screen cash/card submission popup */
+#pay-amount-popup {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 45%;
+    height: 45%;
+    border-radius: 10px;
+    border: 3px solid #434141;
+    background-color: #dacfbd;
+    padding: 15px; 
+}
+
+#pay-amount-title {
+    flex: 1;
+}
+
+#balance-info {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px 0;
+}
+
+#pay-amount-heading {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Receipt popup window and options */
+#receipt-popup {
+    display: none;
+}
+
 /* Alter quantity of selected product (Pop-up) */
 .outer {
     position: fixed;
@@ -514,7 +569,7 @@
     justify-content: space-between;
 }
 
-#quantity-input {
+#quantity-input, #pay-amount-input {
     width: 120px;
     height: 40px;
     text-align: center;
@@ -524,7 +579,7 @@
     font-size: 20px;
 }
 
-#qty-error-message, .generic-error-message {
+#qty-error-message, #pay-amount-error-message, .generic-error-message {
     color: #ff0000;
     font-weight: bold;
 }

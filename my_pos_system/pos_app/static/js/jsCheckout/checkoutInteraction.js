@@ -152,6 +152,7 @@ function handleProductClick(event) {
                 EAN: productContainer.dataset.ean,
                 image: productContainer.querySelector('img').src,
                 name: productContainer.querySelector('.product-name').textContent,
+                quantity: productContainer.dataset.quantity,
                 availableQuantity: productContainer.dataset.availableQuantity
             };
             displayOverlay(document.querySelector('.qty-remove-popup'), productInfo);
@@ -169,10 +170,11 @@ function handlePayButtonClick() {
     const paySavings = document.getElementById('pay-savings-total');
     const backButton = document.getElementById('pay-return-button');
     const voidButton = document.getElementById('void-button');
+    const cashButton = document.getElementById('cash-button');
+    const cardButton = document.getElementById('card-button');
 
     // Check if payButton is active or disabled (greyed-out)
     if (payButton.disabled) {
-        console.log('Pay button is disabled but Im ignoring you EVIL DJANGO MWAHAHAHAHAHA');
         return; // Nothing happens
     } else {
         // Display pay container, hide checkout interface
@@ -180,11 +182,104 @@ function handlePayButtonClick() {
         paymentScreen.style.display = 'flex';
 
         // Populate basket values on screen
+        outstandingBalance = basketTotal;
         payItemCount.textContent = `Items: ${itemCount}`;
         payBalance.textContent = `£${basketTotal.toFixed(2)}`;
         paySavings.textContent = `Savings £${savingsTotal.toFixed(2)}`;
 
+        // Attach event listeners
         backButton.addEventListener('click', exitPayScreen);
         voidButton.addEventListener('click', voidShop);
+        cashButton.addEventListener('click', () => displayPayAmount('cash'));
+        cardButton.addEventListener('click', () => displayPayAmount('card'));
+    }
+}
+
+// Handle cash/card popup
+function displayPayAmount(method) {
+    clearError();
+    const overlay = document.querySelector('.outer');
+    const popup = document.getElementById('pay-amount-popup');
+    const paymentInput = document.getElementById('pay-amount-input');
+    const submitPaymentButton = document.getElementById('submit-payment-button');
+    const cancelPaymentButton = document.getElementById('submit-payment-back-button');
+
+    overlay.style.display = 'flex';
+    popup.style.display = 'flex';
+    paymentInput.value = "";
+    document.getElementById('pay-amount-title').textContent = `Enter the amount to pay by ${method}:`;
+    document.getElementById('popup-outstanding').textContent = `£${outstandingBalance.toFixed(2)}`;
+
+    // Event listeners for buttons
+    // Remove previous event listeners before adding a new one
+    submitPaymentButton.replaceWith(submitPaymentButton.cloneNode(true));
+    const newSubmitButton = document.getElementById('submit-payment-button');
+
+    newSubmitButton.addEventListener('click', () => handlePayment(method));
+
+    cancelPaymentButton.addEventListener('click', closeOverlay);
+
+}
+
+// Handle submission of payment method
+function handlePayment(method) {
+    const paymentInput = document.getElementById('pay-amount-input');
+    let paymentAmount = parseFloat(paymentInput.value);
+    
+    // If format is invalid, display relevant error
+    if (isNaN(paymentAmount) || paymentAmount < 0.01) {
+        return displayPaymentErrorMsg("negative");
+    }
+    
+    // Convert to string (2dp) for format check
+    const formattedAmount = paymentAmount.toFixed(2);
+    if (parseFloat(formattedAmount) !== paymentAmount) {
+        return displayPaymentErrorMsg("negative");
+    }
+
+    paymentAmount = parseFloat(formattedAmount); // Round to pennies for calculations
+
+    if (method === "cash" && paymentAmount > outstandingBalance + 100) {
+        return displayPaymentErrorMsg("cashOver");
+    }
+    
+    if (method === "card" && paymentAmount > outstandingBalance) {
+        return displayPaymentErrorMsg("cardOver");
+    }
+
+    // Valid payment - update balances
+    if (method === "cash") {
+        if (paymentAmount > outstandingBalance) {
+            console.log("Payment type: Cash")
+            changeDue = paymentAmount - outstandingBalance;
+            outstandingBalance = 0;
+            closeOverlay();
+        } else {
+            console.log("Payment type: Cash")
+            outstandingBalance -= paymentAmount;
+            changeDue = 0;
+            closeOverlay();
+        }
+        cashPaid += paymentAmount;
+    } else if (method === "card") {
+        console.log("Payment type: Card")
+        outstandingBalance -= paymentAmount;
+        cardPaid += paymentAmount;
+        changeDue = 0;
+        closeOverlay();
+    }
+
+    outstandingBalance = parseFloat(outstandingBalance.toFixed(2)); // Rounding error fix
+    changeDue = parseFloat(changeDue.toFixed(2));
+
+    // Update payment main screen after successful part-payment
+    document.getElementById('total-outstanding-title').textContent = "LEFT TO PAY:";
+    document.getElementById('outstanding-balance').textContent = `£${outstandingBalance.toFixed(2)}`;
+    updateBackButtonStyle();
+
+    // Transaction complete - display "Thank You" message
+    console.log(`Balances: Cash ${cashPaid}, Card ${cardPaid}, OutstandingBalance ${outstandingBalance}, Change ${changeDue}`);
+    if (outstandingBalance == 0) {
+        alert("Thank You!");
     }
 }

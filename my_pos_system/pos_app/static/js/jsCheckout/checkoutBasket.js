@@ -200,7 +200,7 @@ function updateTotals() {
         itemCount += quantity;
     });
 
-    document.getElementById('item-count').textContent = `${itemCount} Item${itemCount > 1 ? 's' : ''}`;
+    document.getElementById('item-count').textContent = `${itemCount} Item${itemCount > 1 | itemCount == 0 ? 's' : ''}`;
     document.getElementById('savings-total').textContent = `Savings: £${savingsTotal.toFixed(2)}`;
     document.getElementById('basket-total').textContent = `Basket Total: £${basketTotal.toFixed(2)}`;
 

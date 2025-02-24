@@ -53,6 +53,41 @@
             <button class="back-button">Return to basket</button>
         </div>
     </div>
+    <div id="pay-amount-popup">
+        <div class="popup-title">
+            <p id="pay-amount-title">Enter the amount to pay by #METHOD#:</p>
+        </div>
+        <div id="balance-info">
+            <p>Outstanding Balance:</p>
+            <p id="popup-outstanding">£5.00</p>
+        </div>
+        <div class="qty-and-submit">
+            <p id="pay-amount-heading">Amount:</p>
+            <input type="number" id="pay-amount-input">
+            <p id="pay-amount-error-message"></p>
+            <button id="submit-payment-button" class="pay-screen-button">Submit</button>
+            <button id="submit-payment-back-button" class="pay-screen-button">Cancel</button>
+        </div>
+    </div>
+    <div id="receipt-popup" class="receipt-popup">
+        <div class="popup-title">
+            <p>Payment Received. Thank You!</p>
+        </div>
+        <div id="receipt-container" class="receipt-container">
+            <div id="receipt-header">
+                <h3>CharStore</h3>
+                <p>Thank you for choosing CharStore &#9829;.</p>
+            </div>
+            <div id="receipt-main">
+                <!-- Populate with receipt details based on transaction -->
+            </div>
+            <div id="receipt-footer">
+                <p id="transaction-time">TIME</p>
+                <p>|</p>
+                <p id="transaction-number">Transaction Number #TEST#</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Pay Screen (replaces checkout interface when displayed) -->

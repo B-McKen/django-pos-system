@@ -6,6 +6,10 @@ let isMember = false; // Assume customer is not a member to begin with
 let itemCount = 0;
 let savingsTotal = 0;
 let basketTotal = 0;
+let outstandingBalance = 0;
+let cashPaid = 0;
+let cardPaid = 0;
+let changeDue = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     displayTime();
@@ -39,4 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     focusSearchBar();
     // Initialise payButton to be disabled
     updatePayButtonStyle();
+    // Initialise pay screen back button to be enabled
+    updateBackButtonStyle();
 });
