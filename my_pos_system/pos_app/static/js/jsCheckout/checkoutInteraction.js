@@ -270,6 +270,8 @@ function handlePayment(method) {
     }
 
     outstandingBalance = parseFloat(outstandingBalance.toFixed(2)); // Rounding error fix
+    cashPaid = parseFloat(cashPaid.toFixed(2));
+    cardPaid = parseFloat(cardPaid.toFixed(2));
     changeDue = parseFloat(changeDue.toFixed(2));
 
     // Update payment main screen after successful part-payment
@@ -281,5 +283,6 @@ function handlePayment(method) {
     console.log(`Balances: Cash ${cashPaid}, Card ${cardPaid}, OutstandingBalance ${outstandingBalance}, Change ${changeDue}`);
     if (outstandingBalance == 0) {
         alert("Thank You!");
+        completeTransaction();
     }
 }

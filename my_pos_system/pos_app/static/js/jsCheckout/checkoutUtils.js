@@ -15,6 +15,20 @@ function displayTime() {
     document.getElementById('checkout-datetime').textContent = timeString;
 }
 
+// Retrieve date and time for receipt
+function getTransactionTime() {
+    const currentTime = new Date();
+    const day = currentTime.getDate().toString().padStart(2, '0');
+    const month = (currentTime.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentTime.getFullYear().toString().slice(-2);
+
+    const hours = currentTime.getHours().toString().padStart(2, '0');
+    const mins = currentTime.getMinutes().toString().padStart(2, '0');
+
+    const receiptTimeArray = [`${day}/${month}/${year}`, `${hours}:${mins}`];
+    return receiptTimeArray;
+}
+
 // Display overlay window
 function displayOverlay(popup, info) {
     const overlay = document.querySelector('.outer');

@@ -207,3 +207,61 @@ function updateTotals() {
     // Enable / disable Pay button according to itemCount
     updatePayButtonStyle();
 }
+
+// Transaction complete - display receipt popup
+function completeTransaction() {
+    const overlay = document.querySelector('.outer');
+    const receiptPopup = document.getElementById('receipt-popup');
+    const template = document.querySelector('.receipt-item-template');
+    const items = document.getElementById('product-container-main');
+    // Convert to array to loop backwards to prevent items appearing backwards
+    const products = [...items.querySelectorAll('.product-item-template:not([style*="display: none"])')];
+
+    overlay.style.display = 'flex';
+    receiptPopup.style.display = 'flex';
+
+    // Populate receipt with product info
+    products.reverse().forEach(item => {
+        const receiptItem = template.cloneNode(true);
+        const hasDiscount = item.dataset.discount === "true";
+        const unitPrice = isMember && hasDiscount ? item.dataset.discountedUnitPrice || item.dataset.unitPrice : item.dataset.unitPrice;
+        receiptItem.style.display = 'flex';
+
+        receiptItem.querySelector('.receipt-item-quantity').textContent = item.dataset.quantity;
+        receiptItem.querySelector('.receipt-item-name').textContent = 
+        `${item.querySelector('.product-name').textContent} ${item.dataset.quantity > 1 ? '(£' + parseFloat(unitPrice).toFixed(2) + ' each)' : ''}`;
+        receiptItem.querySelector('.receipt-item-price').textContent = item.querySelector('.product-price').textContent;
+        
+        const container = document.getElementById('receipt-main');
+        container.appendChild(receiptItem);
+    });
+
+    // Populate receipt with basket / payment info
+    if (isMember) {
+        document.getElementById('receipt-savings').style.display = 'flex';
+        document.getElementById('receipt-savings-amount').textContent = `£${savingsTotal.toFixed(2)}`;
+    }
+    
+    document.getElementById('receipt-total-amount').textContent = `£${basketTotal.toFixed(2)}`;
+
+    if (cashPaid !== 0) {
+        document.getElementById('receipt-cash-total').style.display = 'flex';
+        document.getElementById('receipt-cash-amount').textContent = `£${cashPaid.toFixed(2)}`;
+    }
+    if (cardPaid !== 0) {
+        document.getElementById('receipt-card-total').style.display = 'flex';
+        document.getElementById('receipt-card-amount').textContent = `£${cardPaid.toFixed(2)}`;
+    }
+    if (changeDue !== 0) {
+        document.getElementById('receipt-change-due').style.display = 'flex';
+        document.getElementById('receipt-change-amount').textContent = `£${changeDue.toFixed(2)}`;
+    }
+
+    // Footer info
+    const transDate = document.getElementById('transaction-date');
+    const transTime = document.getElementById('transaction-time');
+    const [date, time] = getTransactionTime();
+    transDate.textContent = date;
+    transTime.textContent = time;
+    document.getElementById('transaction-number').textContent = 'Transaction 1';
+}

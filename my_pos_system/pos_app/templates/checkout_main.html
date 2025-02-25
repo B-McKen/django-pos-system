@@ -79,13 +79,43 @@
                 <p>Thank you for choosing CharStore &#9829;.</p>
             </div>
             <div id="receipt-main">
-                <!-- Populate with receipt details based on transaction -->
+                <div class="receipt-item-template">
+                    <p class="receipt-item-quantity">#QTY#</p>
+                    <p class="receipt-item-name">#NAME# #NAME# #NAME# #NAME# #NAME# #NAME# #NAME# #NAME#</p>
+                    <p class="receipt-item-price">#AMOUNT#</p>
+                </div>
+            </div>
+            <div id="receipt-savings">
+                <p>Membership Savings:</p>
+                <p id="receipt-savings-amount">#AMOUNT#</p>
+            </div>
+            <div id="receipt-tot-paid">
+                <div id="receipt-total">
+                    <p>Total:</p>
+                    <p id="receipt-total-amount">#AMOUNT#</p>
+                </div>
+                <div id="receipt-cash-total">
+                    <p>Cash:</p>
+                    <p id="receipt-cash-amount">#AMOUNT#</p>
+                </div>
+                <div id="receipt-card-total">
+                    <p>Card:</p>
+                    <p id="receipt-card-amount">#AMOUNT#</p>
+                </div>
+                <div id="receipt-change-due">
+                    <p>Change Due:</p>
+                    <p id="receipt-change-amount">#AMOUNT#</p>
+                </div>
             </div>
             <div id="receipt-footer">
-                <p id="transaction-time">TIME</p>
-                <p>|</p>
-                <p id="transaction-number">Transaction Number #TEST#</p>
+                <p id="transaction-date">#DATE#</p>
+                <p id="transaction-time">#TIME</p>
+                <p id="transaction-number">Transaction: #TEST</p>
             </div>
+        </div>
+        <div id="receipt-options">
+            <button id="close-receipt-button" class="pay-screen-button">Close</button>
+            <button id="save-receipt-button" class="pay-screen-button">Save Receipt</button>
         </div>
     </div>
 </div>

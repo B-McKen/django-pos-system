@@ -463,6 +463,93 @@
 /* Receipt popup window and options */
 #receipt-popup {
     display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 45%;
+    height: 60%;
+    border-radius: 10px;
+    border: 3px solid #434141;
+    background-color: #dacfbd;
+    padding: 15px;
+}
+
+#receipt-container {
+    background: #fff;
+    max-height: 800px;
+    width: 400px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+#receipt-header {
+    text-align: center;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 5px;
+}
+
+#receipt-main {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.receipt-item-template {
+    display: none;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+
+.receipt-item-quantity {
+    padding-right: 10px;
+}
+
+.receipt-item-name {
+    flex-wrap: wrap;
+    text-align: left;
+    padding: 0 10px;
+}
+
+.receipt-item-price {
+    min-width: 100px;
+    text-align: right;
+}
+
+#receipt-savings {
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}
+
+#receipt-tot-paid {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}
+
+#receipt-savings, #receipt-cash-total, #receipt-card-total, #receipt-change-due {
+    display: none;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+#receipt-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+#receipt-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}
+
+#receipt-options {
+    margin-top: 10px;
 }
 
 /* Alter quantity of selected product (Pop-up) */
