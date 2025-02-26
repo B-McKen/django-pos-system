@@ -283,6 +283,6 @@ function handlePayment(method) {
     console.log(`Balances: Cash ${cashPaid}, Card ${cardPaid}, OutstandingBalance ${outstandingBalance}, Change ${changeDue}`);
     if (outstandingBalance == 0) {
         alert("Thank You!");
-        completeTransaction();
+        displayReceipt();
     }
 }

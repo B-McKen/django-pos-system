@@ -209,11 +209,14 @@ function updateTotals() {
 }
 
 // Transaction complete - display receipt popup
-function completeTransaction() {
+function displayReceipt() {
     const overlay = document.querySelector('.outer');
     const receiptPopup = document.getElementById('receipt-popup');
     const template = document.querySelector('.receipt-item-template');
     const items = document.getElementById('product-container-main');
+    const closeButton = document.getElementById('close-receipt-button');
+    const saveButton = document.getElementById('save-receipt-button');
+
     // Convert to array to loop backwards to prevent items appearing backwards
     const products = [...items.querySelectorAll('.product-item-template:not([style*="display: none"])')];
 
@@ -263,5 +266,11 @@ function completeTransaction() {
     const [date, time] = getTransactionTime();
     transDate.textContent = date;
     transTime.textContent = time;
-    document.getElementById('transaction-number').textContent = 'Transaction 1';
+
+    // Save receipt to DB as PDF, retrieving transaction number too
+    saveTransaction();
+
+    // Attach event listeners to "close" and "save" buttons
+    closeButton.addEventListener('click', restartCheckout);
+    saveButton.addEventListener('click', downloadReceipt);
 }

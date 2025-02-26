@@ -255,3 +255,76 @@ function displayPaymentErrorMsg(errorType) {
     }
     paymentError.style.display = 'inline-block';
 }
+
+function getCSRFToken() {
+    const csrfToken = document.cookie.split('; ')
+        .find(row => row.startsWith('csrftoken='))
+        ?.split('=')[1];
+    return csrfToken || '';
+}
+
+// Create a PDF of the receipt and send it to the database
+function saveTransaction() {
+    const receiptData = `
+    <html>
+        <head>
+            <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/static/styles/pdf_receipt.css?">
+        </head>
+        <body>
+            ${document.getElementById('receipt-container').outerHTML}
+        </body>
+    </html>
+    `;
+
+    const transactionData = {
+        trans_date: document.getElementById('transaction-date').textContent,
+        trans_time: document.getElementById('transaction-time').textContent,
+        trans_value: document.getElementById('receipt-total-amount').textContent.replace("£", ""),
+        receipt_html: receiptData
+    };
+
+    fetch('/receipt-pdf/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify(transactionData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Store transaction number
+            transactionNumber = data.transaction_no;
+            // Update receipt popup with number
+            document.getElementById('transaction-number').textContent = `Transaction ${transactionNumber}`;
+            console.log('Transaction saved:', data);
+        } else {
+            console.error('Error saving transaction:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function restartCheckout() {
+    location.reload();
+}
+
+function downloadReceipt() {
+    // Retrieve transaction number
+    if (!transactionNumber) {
+        console.error('Transaction Number is missing!');
+        return;
+    }
+
+    // URL to fetch receipt PDF from
+    const downloadUrl = `/download-receipt/${transactionNumber}/`;
+
+    // Link <a> element to trigger download
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = `receipt-trans-no-${transactionNumber}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

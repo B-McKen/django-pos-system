@@ -1,0 +1,79 @@
+/* Styles for the static receipt PDF for database and download */
+* {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+#receipt-container {
+    background-color: #fff;
+    width: 400px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+#receipt-header {
+    text-align: center;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 5px;
+}
+
+#receipt-main {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.receipt-item-template {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+
+.receipt-item-quantity {
+    width: 15px;
+    padding-right: 10px;
+}
+
+.receipt-item-name {
+    flex-wrap: wrap;
+    align-self: flex-start;
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+.receipt-item-price {
+    min-width: 100px;
+    text-align: right;
+}
+
+#receipt-savings {
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}
+
+#receipt-tot-paid {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}
+
+#receipt-savings, #receipt-cash-total, #receipt-card-total, #receipt-change-due {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+#receipt-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+#receipt-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}

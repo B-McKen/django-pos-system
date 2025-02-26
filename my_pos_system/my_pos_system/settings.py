@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "pos_app"
+    "pos_app",
+    "wkhtmltopdf"
 ]
+
+# Path to wkhtmltopdf executable
+WKHTMLTOPDF_CMD = "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -107,12 +111,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-uk'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GB'
 
 USE_I18N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ['%d/%m/%Y'] # DD/MM/YYYY
+TIME_FORMAT = 'H:i' # HH:MM
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -121,8 +127,8 @@ STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = 'static/'
 
 # Where all the media (eg. product images) are held plus URL to access
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

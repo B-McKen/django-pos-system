@@ -1,10 +1,15 @@
 # pylint: disable=no-member
 import logging
+import os
 import json
+import subprocess
 from django.db.models import Q
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse, Http404
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from .models import Product
+from .models import Transaction
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +31,7 @@ def login_page(request):
 
 def registration_page(request):
     return render(request, "registration.html")
+
 
 # DB interaction
 def search_results(request):
@@ -62,6 +68,7 @@ def search_results(request):
         print(f"API Error: {e}")
         return JsonResponse({'error': 'Server error'}, status=500)
 
+
 def scanned_product(request):
     """
     Fetch details of a product based on the EAN provided in the GET request.
@@ -86,6 +93,7 @@ def scanned_product(request):
             return JsonResponse(response_data)
         except Product.DoesNotExist:
             return JsonResponse({'error': 'Product Not Found'}, status=404)
+
 
 def PLU_products(request):
     """
@@ -120,6 +128,107 @@ def PLU_products(request):
     except Exception as e:
         print(f"API Error: {e}")
         return JsonResponse({'error': 'Server error'}, status=500)
+
+
+@csrf_exempt
+def receipt_pdf(request):
+    """
+    Fetch transaction details to create a DB entry for it.
+    """
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            # Extract details of transaction
+            trans_date = data.get('trans_date')
+            trans_time = data.get('trans_time')
+            trans_value = data.get('trans_value')
+            receipt_html = data.get('receipt_html')
+
+            if not all([trans_date, trans_time, trans_value, receipt_html]):
+                return JsonResponse({'error': 'Missing data!'}, status=400)
+
+            # Create DB entry
+            transaction = Transaction.objects.create(
+                date=trans_date,
+                time=trans_time,
+                trans_value=trans_value
+            )
+
+            # Insert primary key (transaction number) into receipt HTML
+            trans_no = transaction.trans_no
+            logger.info(f"Transaction created with number {trans_no}")
+            receipt_html = receipt_html.replace("#TEST", str(trans_no))
+
+            # PDF file path
+            pdf_filename = f"transaction-number-{trans_no}.pdf"
+            pdf_filepath = os.path.join(settings.MEDIA_ROOT, 'receipts', pdf_filename)
+
+            # HTML => PDF
+            error = html_to_pdf(receipt_html, pdf_filepath)
+            if error:
+                return JsonResponse({'error': 'Failed to generate PDF'}, status=500)
+
+            # Save to DB entry
+            transaction.receipt = f"receipts/{pdf_filename}"
+            transaction.save()
+
+            return JsonResponse({'success': True, 
+                                 'pdf_url': f"{settings.MEDIA_URL}receipts/{pdf_filename}",
+                                 'transaction_no': trans_no})
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method!'}, status=405)
+
+
+def download_receipt(request, trans_no):
+    """
+    Fetch receipt PDF for transaction and return as file download.
+    """
+    try:
+        # Find transaction
+        transaction = Transaction.objects.get(trans_no=trans_no)
+        # Find PDF path
+        pdf_path = os.path.join(settings.MEDIA_ROOT, str(transaction.receipt))
+
+        # Check if it exists
+        if not os.path.exists(pdf_path):
+            raise Http404("Receipt not found!")
+
+        # Return file
+        return FileResponse(open(pdf_path, 'rb'),
+                            as_attachment=True,
+                            filename=f"receipt-trans-no-{trans_no}.pdf")
+
+    except Exception as e:
+        raise Http404(f"Error retrieving receipt: {str(e)}")
+
+
+def html_to_pdf(source_html, output_path):
+    try:
+        # Path to wkhtmltopdf (as set in settings.py)
+        wkhtmltopdf_path = getattr(settings, "WKHTMLTOPDF_CMD", "wkhtmltopdf")
+
+        # Use subprocess to call wkhtmltopdf
+        process = subprocess.run(
+            [wkhtmltopdf_path, "--encoding", "utf-8", "--quiet", "-", output_path],
+            input=source_html.encode("utf-8"),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False
+        )
+
+        # Check for errors
+        if process.returncode != 0:
+            return f"wkhtmltopdf error: {process.stderr.decode('utf-8')}"
+
+        return None  # No errors
+
+    except Exception as e:
+        return str(e)
+
 
 def item_sales_report(request):
     # Query all products in DB

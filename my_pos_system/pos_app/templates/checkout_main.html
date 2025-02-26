@@ -76,41 +76,41 @@
         <div id="receipt-container" class="receipt-container">
             <div id="receipt-header">
                 <h3>CharStore</h3>
-                <p>Thank you for choosing CharStore &#9829;.</p>
+                <p>Thank you for choosing CharStore &#9829;</p>
             </div>
             <div id="receipt-main">
                 <div class="receipt-item-template">
-                    <p class="receipt-item-quantity">#QTY#</p>
-                    <p class="receipt-item-name">#NAME# #NAME# #NAME# #NAME# #NAME# #NAME# #NAME# #NAME#</p>
-                    <p class="receipt-item-price">#AMOUNT#</p>
+                    <p class="receipt-item-quantity"></p>
+                    <p class="receipt-item-name"></p>
+                    <p class="receipt-item-price"></p>
                 </div>
             </div>
             <div id="receipt-savings">
                 <p>Membership Savings:</p>
-                <p id="receipt-savings-amount">#AMOUNT#</p>
+                <p id="receipt-savings-amount">£0.00</p>
             </div>
             <div id="receipt-tot-paid">
                 <div id="receipt-total">
                     <p>Total:</p>
-                    <p id="receipt-total-amount">#AMOUNT#</p>
+                    <p id="receipt-total-amount">£0.00</p>
                 </div>
                 <div id="receipt-cash-total">
                     <p>Cash:</p>
-                    <p id="receipt-cash-amount">#AMOUNT#</p>
+                    <p id="receipt-cash-amount">£0.00</p>
                 </div>
                 <div id="receipt-card-total">
                     <p>Card:</p>
-                    <p id="receipt-card-amount">#AMOUNT#</p>
+                    <p id="receipt-card-amount">£0.00</p>
                 </div>
                 <div id="receipt-change-due">
                     <p>Change Due:</p>
-                    <p id="receipt-change-amount">#AMOUNT#</p>
+                    <p id="receipt-change-amount">£0.00</p>
                 </div>
             </div>
             <div id="receipt-footer">
-                <p id="transaction-date">#DATE#</p>
-                <p id="transaction-time">#TIME</p>
-                <p id="transaction-number">Transaction: #TEST</p>
+                <p id="transaction-date"></p>
+                <p id="transaction-time"></p>
+                <p id="transaction-number">Transaction #TEST</p>
             </div>
         </div>
         <div id="receipt-options">
@@ -209,6 +209,7 @@
         </div>
     </div>
 </div>
+<script src="{% static 'js/global.js' %}"></script>
 <script src="{% static 'js/jsCheckout/checkoutBasket.js' %}"></script>
 <script src="{% static 'js/jsCheckout/checkoutInteraction.js' %}"></script>
 <script src="{% static 'js/jsCheckout/checkoutUtils.js' %}"></script>

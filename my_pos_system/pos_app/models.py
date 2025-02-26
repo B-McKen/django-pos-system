@@ -15,7 +15,7 @@ class Product(models.Model):
         ('misc', 'Miscellaneous Items'),
     ]
 
-    # Make all entries REQUIRED
+    # Make all entries REQUIRED (blank / null false)
     EAN = models.CharField(max_length=13, unique=True, blank=False, null=False)
     dept = models.CharField(
         max_length=20,
@@ -37,3 +37,17 @@ class Product(models.Model):
             out += f"Discounted Price: {self.discounted_price})"
             return out
         return f"{self.name} (EAN: {self.EAN}, Department: {self.dept}, Price: {self.price})"
+
+
+class Transaction(models.Model):
+    """
+    Class to store transaction number, date, time, value, and receipt image for transactions.
+    """
+    trans_no = models.BigAutoField(primary_key=True) # Non-resettable, auto-increments
+    date = models.DateField(auto_now_add=True, blank=False)
+    time = models.TimeField(auto_now_add=True, blank=False)
+    trans_value = models.DecimalField(max_digits=8, decimal_places=2)
+    receipt = models.ImageField(upload_to="receipts/")
+
+    def __str__(self):
+        return f"Transaction Number {self.trans_no}, Date: {self.date}, Time: {self.time}, Value: £{self.trans_value}"

@@ -10,6 +10,7 @@ let outstandingBalance = 0;
 let cashPaid = 0;
 let cardPaid = 0;
 let changeDue = 0;
+let transactionNumber = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     displayTime();

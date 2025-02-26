@@ -475,7 +475,7 @@
 }
 
 #receipt-container {
-    background: #fff;
+    background-color: #fff;
     max-height: 800px;
     width: 400px;
     overflow-y: auto;
@@ -502,13 +502,15 @@
 }
 
 .receipt-item-quantity {
+    width: 15px;
     padding-right: 10px;
 }
 
 .receipt-item-name {
     flex-wrap: wrap;
-    text-align: left;
-    padding: 0 10px;
+    align-self: flex-start;
+    flex-grow: 1;
+    padding: 0 15px;
 }
 
 .receipt-item-price {
