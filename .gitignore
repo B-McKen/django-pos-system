@@ -21,3 +21,6 @@ Important/
 # Django migrations (atm)
 db.sqlite3
 *.sqlite3
+
+# Celery / Celery beat schedule files
+celerybeat-schedule.*
