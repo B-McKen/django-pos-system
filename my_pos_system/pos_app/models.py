@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.
 class Product(models.Model):
@@ -28,8 +29,19 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False)
     discount = models.BooleanField(default=False, blank=False, null=False)
     discounted_price = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False)
-    image = models.ImageField(upload_to="media")
+    image = models.ImageField(upload_to="product_images")
     available_qty = models.IntegerField()
+    sales_today = models.PositiveIntegerField(default=0)
+    last_sales_reset = models.DateField(default=now)
+
+    def reset_daily_sales(self):
+        """
+        Reset sales_today if it is the next day (manual check when purchasing).
+        """
+        if self.last_sales_reset < now().date():
+            self.sales_today = 0
+            self.last_sales_reset = now().date()
+            self.save()
 
     def __str__(self):
         if self.discount:

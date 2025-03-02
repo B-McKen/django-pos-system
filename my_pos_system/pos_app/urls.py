@@ -17,6 +17,7 @@ urlpatterns = [
     path("api/product/", views.scanned_product, name="scanned_product"),
     path("api/product/department/", views.PLU_products, name="plu_products"),
     path("api/search-product/", views.search_results, name="search_results"),
+    path("update-sales/<str:product_EAN>/", views.update_sales, name="update_sales_quantity"),
 
     # Receipt handling
     path("receipt-pdf/", views.receipt_pdf, name="receipt_pdf"),

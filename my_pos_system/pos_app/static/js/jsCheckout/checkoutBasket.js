@@ -270,6 +270,9 @@ function displayReceipt() {
     // Save receipt to DB as PDF, retrieving transaction number too
     saveTransaction();
 
+    // Update daily sales totals for each item in basket
+    updateDailySales();
+
     // Attach event listeners to "close" and "save" buttons
     closeButton.addEventListener('click', restartCheckout);
     saveButton.addEventListener('click', downloadReceipt);

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+import shutil
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,11 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "pos_app",
-    "wkhtmltopdf"
+    "wkhtmltopdf",
+    'django_celery_beat',
 ]
 
-# Path to wkhtmltopdf executable
-WKHTMLTOPDF_CMD = "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe"
+# Path to wkhtmltopdf executable (Docker vs Local)
+WKHTMLTOPDF_CMD = shutil.which("wkhtmltopdf") or "/usr/bin/wkhtmltopdf"
+
+# Celery settings (for daily counter updates) - broker is Redis
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TIMEZONE = "Europe/London"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0" # Same as broker URL
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,9 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-uk'
+LANGUAGE_CODE = 'en-GB'
 
-TIME_ZONE = 'GB'
+TIME_ZONE = 'Europe/London'
 
 USE_I18N = True
 
@@ -127,8 +136,8 @@ STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = 'static/'
 
 # Where all the media (eg. product images) are held plus URL to access
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

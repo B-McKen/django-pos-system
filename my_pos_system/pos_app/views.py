@@ -167,13 +167,14 @@ def receipt_pdf(request):
             # HTML => PDF
             error = html_to_pdf(receipt_html, pdf_filepath)
             if error:
+                logger.error(f"PDF GENERATION FAILED: {error}")
                 return JsonResponse({'error': 'Failed to generate PDF'}, status=500)
 
             # Save to DB entry
             transaction.receipt = f"receipts/{pdf_filename}"
             transaction.save()
 
-            return JsonResponse({'success': True, 
+            return JsonResponse({'success': True,
                                  'pdf_url': f"{settings.MEDIA_URL}receipts/{pdf_filename}",
                                  'transaction_no': trans_no})
 
@@ -207,6 +208,9 @@ def download_receipt(request, trans_no):
 
 
 def html_to_pdf(source_html, output_path):
+    """
+    Use wkhtmltopdf to turn the HTML content of a receipt into a PDF.
+    """
     try:
         # Path to wkhtmltopdf (as set in settings.py)
         wkhtmltopdf_path = getattr(settings, "WKHTMLTOPDF_CMD", "wkhtmltopdf")
@@ -228,6 +232,32 @@ def html_to_pdf(source_html, output_path):
 
     except Exception as e:
         return str(e)
+
+
+@csrf_exempt
+def update_sales(request, product_EAN):
+    """
+    Update daily sales total and available quantity based on transaction.
+    """
+    if request.method == "POST":
+        try:
+            product = Product.objects.get(EAN=product_EAN)
+            # Check if reset is required
+            product.reset_daily_sales()
+
+            data = json.loads(request.body)
+            quantity = int(data.get("quantity", 0))
+
+            # Update sales today based on quantity sold in transaction
+            product.sales_today += quantity
+            # Update available quantity
+            product.available_qty -= quantity
+            product.save()
+
+            return JsonResponse({"message": "Sales updated", "sales_today": product.sales_today})
+        except Product.DoesNotExist:
+            return JsonResponse({"error": "Product not found"}, status=404)
+    return JsonResponse({"error": "Invalid request!"}, status=400)
 
 
 def item_sales_report(request):
