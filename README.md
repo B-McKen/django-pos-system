@@ -33,7 +33,7 @@ docker-compose up
 
 3. To benefit from the PDF generation functionality, please see the below installation instructions for `wkhtmltopdf`
 
-4. Stop the server by running:
+4. Stop the server by running the following in a separate terminal:
 ```bash
 docker-compose down
 ```
