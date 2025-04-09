@@ -172,8 +172,13 @@ body {
 .footer-icons .icon {
     width: 120px;
     height: 30px;
-    margin: 0 10px;
+    margin: 0 30px;
     transition: transform 0.3s;
+}
+
+#github-icon {
+    height: 50px; /* GitHub logo specifically is 'shorter' than the other logos */
+    margin: -10px;
 }
 
 .footer-icons .icon:hover {
