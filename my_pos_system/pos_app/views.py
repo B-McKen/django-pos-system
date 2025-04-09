@@ -142,16 +142,21 @@ def receipt_pdf(request):
             # Extract details of transaction
             trans_date = data.get('trans_date')
             trans_time = data.get('trans_time')
+            cash_value = data.get('cash_value')
+            card_value = data.get('card_value')
             trans_value = data.get('trans_value')
             receipt_html = data.get('receipt_html')
 
-            if not all([trans_date, trans_time, trans_value, receipt_html]):
-                return JsonResponse({'error': 'Missing data!'}, status=400)
+            required_fields = [trans_date, trans_time, trans_value, receipt_html]
+            if any(field in [None, ""] for field in required_fields):
+                return JsonResponse({'error': 'Missing required data!'}, status=400)
 
             # Create DB entry
             transaction = Transaction.objects.create(
                 date=trans_date,
                 time=trans_time,
+                cash_value=cash_value,
+                card_value=card_value,
                 trans_value=trans_value
             )
 

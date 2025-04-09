@@ -279,6 +279,8 @@ function saveTransaction() {
     const transactionData = {
         trans_date: document.getElementById('transaction-date').textContent,
         trans_time: document.getElementById('transaction-time').textContent,
+        cash_value: cashPaid,
+        card_value: cardPaid,
         trans_value: document.getElementById('receipt-total-amount').textContent.replace("£", ""),
         receipt_html: receiptData
     };

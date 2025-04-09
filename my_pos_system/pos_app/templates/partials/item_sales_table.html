@@ -2,9 +2,12 @@
     <thead>
         <tr>
             <th>Image</th>
-            <th>Name</th>
             <th>EAN</th>
-            <th>Sales Today</th>
+            <th>Name</th>
+            <th>Dept</th>
+            <th>Stock</th>
+            <th>Sold Today</th>
+            <th>Add Delivery</th>
         </tr>
     </thead>
     <tbody>
@@ -17,9 +20,12 @@
                         No Image
                     {% endif %}
                 </td>
-                <td>{{ product.name }}</td>
                 <td>{{ product.EAN }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.dept }}</td>
+                <td>{{ product.available_qty }}</td>
                 <td>{{ product.sold_today }}</td>
+                <td><input type="text" class="deliv-input"></input></td>
             </tr>
         {% endfor %}
     </tbody>

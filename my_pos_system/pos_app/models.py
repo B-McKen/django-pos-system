@@ -58,6 +58,8 @@ class Transaction(models.Model):
     trans_no = models.BigAutoField(primary_key=True) # Non-resettable, auto-increments
     date = models.DateField(auto_now_add=True, blank=False)
     time = models.TimeField(auto_now_add=True, blank=False)
+    cash_value = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    card_value = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     trans_value = models.DecimalField(max_digits=8, decimal_places=2)
     receipt = models.ImageField(upload_to="receipts/")
 
